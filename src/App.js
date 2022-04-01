@@ -1,29 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
-import StudentForm from './StudentForm';
+import Form from './Form';
+import List from './List';
+import Time from './Time'
+import doSchedule from'./schedule'
+import React, { useState, useEffect } from "react"
+
+
+import data from './data.json'
+import blackout_intervals from './blackout_intervals.json'
+import internal from 'stream';
 
 function App() {
+  const [students, setStudents] = useState([])
+
+  // TODO: REMOVE AFTER DONE TESTING
+  useEffect(() => {
+    setStudents(data)
+  },[])
+
+  useEffect(()=> {
+    console.log(doSchedule(interval, blackout_intervals, students))
+  },[students])
+
   return (
-    <StudentForm/>
-  )
-  // return (
-  //   <div className="App">
-  //     <header className="App-header">
-  //       <img src={logo} className="App-logo" alt="logo" />
-  //       <p>
-  //         Edit <code>src/App.js</code> and save to reload.
-  //       </p>
-  //       <a
-  //         className="App-link"
-  //         href="https://reactjs.org"
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //       >
-  //         Learn React
-  //       </a>
-  //     </header>
-  //   </div>
-  // );
+    <div className="App">
+      <header className="App-header">
+        <Form setStudents={setStudents}/>
+        <List students={students}></List>
+      </header>
+    </div>
+  );
 }
 
 export default App;
