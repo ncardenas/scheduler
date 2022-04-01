@@ -17,13 +17,16 @@ class Student {
         }
     }
     
-    addAvailability(day: string, start: Time, end: Time) {
+    addAvailability(day: string, start: Time, end: Time) : void {
         this.availability[day.toLowerCase()].push( {'start': start, 'end': end} )
     }
 
     getAvailability(day: string) : Object[] {
         return this.availability[day.toLowerCase()]
     }
+
+    getId() : number { return this.id }
+    getGrade() : number { return this.grade }
 }
 
 export default Student

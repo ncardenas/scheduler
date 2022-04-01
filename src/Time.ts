@@ -15,7 +15,7 @@ class Time {
     getHour() : number { return this.hour }
     getMinute() : number { return this.minute }
     getTimeInMins() : number { return (this.hour*60)+this.minute}
-    areEqual(rhs: Time) : boolean {
+    isEqual(rhs: Time) : boolean {
         return rhs.getTimeInMins() === this.getTimeInMins()
     }
 }

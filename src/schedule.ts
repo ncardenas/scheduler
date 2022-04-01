@@ -1,8 +1,25 @@
 import Student from './Student'
 
-function doSchedule(interval: number, blackout_intervals: Object, students: Student[]) {
+class Schedule {
+    meetings: Object
 
-    return students
+    constructor() {
+        this.meetings = {
+            'monday': [],
+            'tuesday': [],
+            'wednesday': [],
+            'thursday': [],
+            'friday': []
+        }
+    }
+
+    addMeetings(day: string, meetings: Object[]): void {
+        this.meetings[day.toLowerCase()].push(meetings)
+    }
+
+    getMeetings(day: string): Object[] {
+        return this.meetings[day.toLowerCase()]
+    }
 }
 
-export default doSchedule
+export default Schedule
