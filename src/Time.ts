@@ -15,9 +15,6 @@ class Time {
     getHour() : number { return this.hour }
     getMinute() : number { return this.minute }
     getTimeInMins() : number { return (this.hour*60)+this.minute}
-    isEqual(rhs: Time) : boolean {
-        return rhs.getTimeInMins() === this.getTimeInMins()
-    }
 
     addMinutes(more_minutes: number): Time {
         if (more_minutes < 0) return // not mplementing negatives until needed
@@ -27,10 +24,22 @@ class Time {
         // 4) Add Hours and Remaining Minutes to object
 
         var total_mins = this.minute + more_minutes
-        var hours = total_mins / 60
+        var hours = Math.floor(total_mins / 60)
         var remaining_mins = total_mins - (hours*60)
-        var hour = this.hour + total_mins/60
+        var hour = this.hour + hours
         return new Time(hour, remaining_mins)
+    }
+
+    greaterThanOrEqualTo(rhs: Time): boolean {
+        return this.getTimeInMins() >= rhs.getTimeInMins()
+    }
+
+    equalTo(rhs: Time): boolean {
+        return this.getTimeInMins() === rhs.getTimeInMins()
+    }
+
+    lessThan(rhs: Time): boolean {
+        return this.getTimeInMins() < rhs.getTimeInMins()
     }
 }
 

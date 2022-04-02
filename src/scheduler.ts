@@ -3,11 +3,10 @@ import Meeting from "./Meeting"
 import Student from "./Student"
 import Schedule from "./Schedule"
 
-function breakUpTimes(interval: number, times: Object[]): Object[] {
+export function breakUpTimes(interval: number, times: Object[]): Object[] {
     if (times.length === 0) return []
 
     const result = []
-
     for (const time of times) {
         var i = 1
         var new_end = time['start']
@@ -18,11 +17,12 @@ function breakUpTimes(interval: number, times: Object[]): Object[] {
             result.push(new_interval)
             i += 1
 
-            if (new_end >= time['end']) {
+            if (new_end.greaterThanOrEqualTo(time['end'])) {
                 break
             }
         }
     }
+    return result
 }
 
 function initializeIntervals(interval: number, start: Time=new Time(), stop:Time=new Time(24, 0)) {

@@ -25,10 +25,10 @@ describe("Meeting", () => {
     })
 
     it("getStart()", () => {
-        expect(meeting.getStart().isEqual(start)).toBe(true)
+        expect(meeting.getStart().equalTo(start)).toBe(true)
     })
 
     it("getEnd()", () => {
-        expect(meeting.getEnd().isEqual(end)).toBe(true)
+        expect(meeting.getEnd().equalTo(end)).toBe(true)
     })
 })

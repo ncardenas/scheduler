@@ -19,13 +19,19 @@ describe("Time", () =>{
     })
 
     const equal_time = new Time(11, 30)
-    it("isEqual()", () => {
-        expect(time.isEqual(equal_time)).toBe(true)
+    it("equalTo()", () => {
+        expect(time.equalTo(equal_time)).toBe(true)
     })
 
     const not_equal_time = new Time(11, 31)
-    it("areEqual()", () => {
-        expect(time.isEqual(not_equal_time)).toBe(false)
+    it("equalTo()", () => {
+        expect(time.equalTo(not_equal_time)).toBe(false)
     })
 
+    it("addMinutes()", () => {
+        const add_30 = 30
+        const actual = time.addMinutes(add_30)
+        const expected = new Time(12)
+        expect(actual.getTimeInMins()).toBe(expected.getTimeInMins())
+    })
 })
