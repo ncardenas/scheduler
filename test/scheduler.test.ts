@@ -1,5 +1,6 @@
-import { breakUpTimes } from "../src/scheduler";
+import { breakUpTimes, initializeIntervals } from "../src/scheduler";
 import Time from "../src/Time";
+import Meeting from "../src/Meeting"
 
 describe("scheduler", () => {
     it("breakUpTimes()",() => {
@@ -24,4 +25,18 @@ describe("scheduler", () => {
         expect(actual).toEqual(expected)
     })
 
+    it("initializeIntervals()", () => {
+        const interval = 60
+        const actual = initializeIntervals(interval, new Time(8), new Time(14))
+        const expected = [
+            new Meeting(new Time(8), new Time(9)),
+            new Meeting(new Time(9), new Time(10)),
+            new Meeting(new Time(10), new Time(11)),
+            new Meeting(new Time(11), new Time(12)),
+            new Meeting(new Time(12), new Time(13)),
+            new Meeting(new Time(13), new Time(14))
+        ]
+
+        expect(actual).toEqual(expected)
+    })
 })

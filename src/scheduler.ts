@@ -25,9 +25,9 @@ export function breakUpTimes(interval: number, times: Object[]): Object[] {
     return result
 }
 
-function initializeIntervals(interval: number, start: Time=new Time(), stop:Time=new Time(24, 0)) {
+export function initializeIntervals(interval: number, start: Time=new Time(), stop:Time=new Time(24, 0)) {
     var result = []
-    while (start < stop) {
+    while (start.lessThan(stop)) {
         var end = start.addMinutes(interval)
         result.push(new Meeting(start, end))
         start = end
