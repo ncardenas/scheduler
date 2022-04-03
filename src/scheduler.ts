@@ -35,10 +35,10 @@ export function initializeIntervals(interval: number, start: Time=new Time(), st
     return result
 }
 
-function blockTimes(blockout_times: Object[], meeting_intervals: Meeting[]) {
+export function blockTimes(blockout_times: Object[], meeting_intervals: Meeting[]) {
     for (const time of blockout_times) {
         for (const meeting of meeting_intervals) {
-            if (time['start'] === meeting.getStart() && time['end'] === meeting.getEnd()) {
+            if (time['start'].equalTo(meeting.getStart()) && time['end'].equalTo(meeting.getEnd())) {
                 meeting.blockTime()
             }
         }

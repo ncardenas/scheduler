@@ -1,6 +1,7 @@
-import { breakUpTimes, initializeIntervals } from "../src/scheduler";
+import { breakUpTimes, initializeIntervals, blockTimes } from "../src/scheduler";
 import Time from "../src/Time";
 import Meeting from "../src/Meeting"
+import exp = require("constants");
 
 describe("scheduler", () => {
     it("breakUpTimes()",() => {
@@ -38,5 +39,28 @@ describe("scheduler", () => {
         ]
 
         expect(actual).toEqual(expected)
+    })
+
+    it("blockTimes()", () => {
+        const blockout_times = [
+            {'start': new Time(10), 'end': new Time(11)},
+            {'start': new Time(12), 'end': new Time(13)}
+        ]
+        const interval = 60
+        const meeting_intervals = initializeIntervals(interval, new Time(8), new Time(14))
+        
+        blockTimes(blockout_times, meeting_intervals)
+        const expected = [
+            new Meeting(new Time(8), new Time(9)),
+            new Meeting(new Time(9), new Time(10)),
+            new Meeting(new Time(10), new Time(11)),
+            new Meeting(new Time(11), new Time(12)),
+            new Meeting(new Time(12), new Time(13)),
+            new Meeting(new Time(13), new Time(14))
+        ]
+        expected[2].blockTime()
+        expected[4].blockTime()
+
+        expect(meeting_intervals).toEqual(expected)
     })
 })
