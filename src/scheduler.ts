@@ -58,7 +58,7 @@ export function addToIntervals(student: Student, add_me: Object, meeting_interva
     }
 }
 
-function getMeetings(interval: number, blockout_times: Object, students: Student[], day: string) {
+export function getMeetings(interval: number, blockout_times: Object, students: Student[], day: string) {
     var meeting_intervals = initializeIntervals(interval)
     blockTimes(blockout_times[day], meeting_intervals)
 
@@ -71,7 +71,7 @@ function getMeetings(interval: number, blockout_times: Object, students: Student
     return meeting_intervals
 }
 
-function doSchedule(interval: number, blockout_times: Object, students: Student[]) {
+export function doSchedule(interval: number, blockout_times: Object, students: Student[]) {
     var schedule = new Schedule()
 
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']

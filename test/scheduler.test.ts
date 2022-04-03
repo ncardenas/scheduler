@@ -1,4 +1,4 @@
-import { breakUpTimes, initializeIntervals, blockTimes, addToIntervals } from "../src/scheduler";
+import { breakUpTimes, initializeIntervals, blockTimes, addToIntervals, getMeetings } from "../src/scheduler";
 import Time from "../src/Time";
 import Student from '../src/Student'
 import Meeting from "../src/Meeting"
@@ -86,4 +86,26 @@ describe("scheduler", () => {
 
         expect(meeting_intervals).toEqual(expected)
     })
+
+//    it("getMeetings", () => {
+        //const interval = 60
+        //const blockout_times = {
+            //'monday': [
+                //{'start': new Time(10), 'end': new Time(11)},
+                //{'start': new Time(12), 'end': new Time(13)}
+            //]
+        //}
+        //const student_1 = new Student(1,1)
+        //student_1.addAvailability('monday', new Time(8), new Time(14))
+
+        //const student_2 = new Student(2,2)
+        //student_2.addAvailability('monday', new Time(8), new Time(14))
+
+        //const day = 'monday'
+
+        //const actual = getMeetings(interval, blockout_times, [student_1, student_2], day)
+        //const expected = initializeIntervals(interval)
+        
+        //expect(expected).toBe(actual)
+    //})
 })
