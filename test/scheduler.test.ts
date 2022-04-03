@@ -1,5 +1,6 @@
-import { breakUpTimes, initializeIntervals, blockTimes } from "../src/scheduler";
+import { breakUpTimes, initializeIntervals, blockTimes, addToIntervals } from "../src/scheduler";
 import Time from "../src/Time";
+import Student from '../src/Student'
 import Meeting from "../src/Meeting"
 import exp = require("constants");
 
@@ -60,6 +61,28 @@ describe("scheduler", () => {
         ]
         expected[2].blockTime()
         expected[4].blockTime()
+
+        expect(meeting_intervals).toEqual(expected)
+    })
+
+    it("addToInervals()", () => {
+        const student = new Student(1,1)
+        student.addAvailability('monday', new Time(8), new Time(14))
+
+        const availability = {'start': new Time(10), 'end': new Time(11)}
+        const meeting_intervals = initializeIntervals(60, new Time(8), new Time(14))
+        addToIntervals(student, availability, meeting_intervals)
+
+        const expected = [
+            new Meeting(new Time(8), new Time(9)),
+            new Meeting(new Time(9), new Time(10)),
+            new Meeting(new Time(10), new Time(11)),
+            new Meeting(new Time(11), new Time(12)),
+            new Meeting(new Time(12), new Time(13)),
+            new Meeting(new Time(13), new Time(14))
+        ]
+
+        expected[2].addStudent(student)
 
         expect(meeting_intervals).toEqual(expected)
     })

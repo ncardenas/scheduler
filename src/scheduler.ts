@@ -45,13 +45,13 @@ export function blockTimes(blockout_times: Object[], meeting_intervals: Meeting[
     }
 }
 
-function addToIntervals(student: Student, add_me: Object, meeting_intervals: Meeting[]) {
+export function addToIntervals(student: Student, add_me: Object, meeting_intervals: Meeting[]) {
     for (const time_slot of meeting_intervals) {
         if (time_slot.isBlocked()) {
             continue
         }
 
-        if (time_slot.getStart() === add_me['start'] && time_slot.getEnd() === add_me['end']) {
+        if (time_slot.getStart().equalTo(add_me['start']) && time_slot.getEnd().equalTo(add_me['end'])) {
             time_slot.addStudent(student)
             break
         }
