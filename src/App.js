@@ -1,6 +1,6 @@
 import './App.css';
-import Form from './Form';
-import List from './List';
+// import Form from './Form';
+// import List from './List';
 //import Time from './Time'
 //import doSchedule from'./schedule'
 import React, { useState, useEffect } from "react"
@@ -21,11 +21,9 @@ function App() {
 
   async function clicked () {
     const result = await window.myApp.sayHello('hello from the renderer')
-    const another = window.api.send("toMain", "data from renderrrrrrrrr")
-    const idk = window.api.receive("fromMain", (data) => console.log(data))
-    console.log(another)
-    console.log(idk)
+    const other = await window.api.openDialog()
     console.log(result)
+    console.log(other)
   }
 
   return (

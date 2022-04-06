@@ -1,10 +1,8 @@
 // Module to control the application lifecycle and the native browser window.
-const { app, BrowserWindow, protocol, ipcMain } = require("electron");
+const { app, BrowserWindow, protocol, ipcMain, dialog } = require("electron");
 const path = require("path");
 const url = require("url");
-const fs = require("fs")
 
-let mainWindow
 
 // Create the native browser window.
 function createWindow() {
@@ -95,9 +93,9 @@ app.on("web-contents-created", (event, contents) => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-ipcMain.on("toMain", async (event, args) => {
-  const response = "Hello From Main"
-  mainWindow.webContents.send("fromMain", response)
+
+ipcMain.handle("open-dialog", async (event, args) => {
+  return dialog.showOpenDialog()
 })
 
 ipcMain.handle("say-hello", async (event, args) => {

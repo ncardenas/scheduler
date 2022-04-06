@@ -1,5 +1,3 @@
-import Student from './Student'
-
 class Schedule {
     meetings: Object
 
