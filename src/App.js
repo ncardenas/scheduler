@@ -1,14 +1,11 @@
 import './App.css';
 import Form from './Form';
 import List from './List';
-import Time from './Time'
-import doSchedule from'./schedule'
+//import Time from './Time'
+//import doSchedule from'./schedule'
 import React, { useState, useEffect } from "react"
-
-
 import data from './data.json'
-import blackout_intervals from './blackout_intervals.json'
-import internal from 'stream';
+
 
 function App() {
   const [students, setStudents] = useState([])
@@ -18,17 +15,40 @@ function App() {
     setStudents(data)
   },[])
 
-  useEffect(()=> {
-    console.log(doSchedule(interval, blackout_intervals, students))
-  },[students])
+  //useEffect(()=> {
+  //  console.log(doSchedule(interval, blackout_intervals, students))
+  //},[students])
+
+  async function clicked () {
+    const result = await window.myApp.sayHello('hello from the renderer')
+    const another = window.api.send("toMain", "data from renderrrrrrrrr")
+    const idk = window.api.receive("fromMain", (data) => console.log(data))
+    console.log(another)
+    console.log(idk)
+    console.log(result)
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Form setStudents={setStudents}/>
-        <List students={students}></List>
-      </header>
+    <div>
+      <button onClick={clicked}>Click Me</button>
+      <h1>Hello From React</h1>
     </div>
+//    <div className="App">
+      //<header className="App-header">
+        //<Form setStudents={setStudents}/>
+        //<List students={students}></List>
+      //</header>
+    //</div>
+
+//    <div>
+
+      //<script>
+        //window.api.receive("fromMain", (data) => console.log(data) )
+
+        //window.api.send("toMain", "data from renderer")
+      //</script>
+
+    //</div>
   );
 }
 
