@@ -95,7 +95,7 @@ app.on("web-contents-created", (event, contents) => {
 // code. You can also put them in separate files and require them here.
 
 ipcMain.handle("open-dialog", async (event, args) => {
-  return dialog.showOpenDialog()
+  return dialog.showOpenDialog({filters: [{name: 'CSV Files', extensions: ['csv']}]})
 })
 
 ipcMain.handle("say-hello", async (event, args) => {
