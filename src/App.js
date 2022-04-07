@@ -20,7 +20,6 @@ function App() {
 
     console.log(file_name)
     console.log(data)
-    // setFile(file_name)
   }
 
   return (

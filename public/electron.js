@@ -3,7 +3,7 @@ const { app, BrowserWindow, protocol, ipcMain, dialog } = require("electron");
 const path = require("path");
 const url = require("url");
 const fs = require('fs');
-const { parse } = require('csv-parse');
+const csv = require('csv-parser');
 
 
 // Create the native browser window.
@@ -104,21 +104,15 @@ ipcMain.handle("open-dialog", async (event, args) => {
 
 ipcMain.handle("parse-csv", async(event, file) => {
   const results = []
-  const headers = []
-  fs.createReadStream(file)
-  .pipe(parse())
-  .on('headers', (headers) => {
-    console.log(`First header: ${headers[0]}`)
-  })
-  .on('data', (data) => {
-    // console.log('data')
-    // console.log(data)
-    // results.push(data))
-  })
-  .on('end', (data) => {
-    // console.log('end')
-    // results.push(data)
-  });
+  await new Promise((resolve) => {
+     fs.createReadStream(file)
+    .pipe(csv({})) 
+    .on('data', (data) => results.push(data))
+    .on('end', () => {
+      console.log('1 ', results)
+      resolve()
+    });
+  }) 
   
   return results
 })
