@@ -7,20 +7,20 @@ import React, { useState, useEffect } from "react"
 
 function App() {
   const [students, setStudents] = useState([])
-  const [file, setFile] = useState('')
+  // const [file, setFile] = useState('')
 
 
-  useEffect(() => {
-    console.log(file)
-  },[file])
-
-  //useEffect(()=> {
-  //  console.log(doSchedule(interval, blackout_intervals, students))
-  //},[students])
+  // useEffect(() => {
+  //   console.log(file)
+  // },[file])
 
   async function clicked () {
-    const result = await window.api.openDialog()
-    setFile(result.filePaths[0])
+    const file_name = await window.api.openDialog()
+    const data = await window.api.parseCSV(file_name)
+
+    console.log(file_name)
+    console.log(data)
+    // setFile(file_name)
   }
 
   return (

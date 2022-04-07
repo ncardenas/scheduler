@@ -2,6 +2,8 @@
 const { app, BrowserWindow, protocol, ipcMain, dialog } = require("electron");
 const path = require("path");
 const url = require("url");
+const fs = require('fs');
+const { parse } = require('csv-parse');
 
 
 // Create the native browser window.
@@ -95,7 +97,30 @@ app.on("web-contents-created", (event, contents) => {
 // code. You can also put them in separate files and require them here.
 
 ipcMain.handle("open-dialog", async (event, args) => {
-  return dialog.showOpenDialog({filters: [{name: 'CSV Files', extensions: ['csv']}]})
+  const filter = {name: 'CSV Files', extensions: ['csv']}
+  const result = await dialog.showOpenDialog({ filters: [filter] })
+  return result.filePaths[0]
+})
+
+ipcMain.handle("parse-csv", async(event, file) => {
+  const results = []
+  const headers = []
+  fs.createReadStream(file)
+  .pipe(parse())
+  .on('headers', (headers) => {
+    console.log(`First header: ${headers[0]}`)
+  })
+  .on('data', (data) => {
+    // console.log('data')
+    // console.log(data)
+    // results.push(data))
+  })
+  .on('end', (data) => {
+    // console.log('end')
+    // results.push(data)
+  });
+  
+  return results
 })
 
 ipcMain.handle("say-hello", async (event, args) => {

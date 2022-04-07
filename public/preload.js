@@ -3,7 +3,8 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
-  openDialog: (arg) => ipcRenderer.invoke("open-dialog", arg)
+  openDialog: (arg) => ipcRenderer.invoke("open-dialog", arg),
+  parseCSV: (arg) => ipcRenderer.invoke("parse-csv", arg)
 })
 
 contextBridge.exposeInMainWorld("myApp", {
