@@ -5,7 +5,7 @@ import Student from './Student'
 
 //import Time from './Time'
 //import doSchedule from'./schedule'
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 function App() {
   const [students, setStudents] = useState([])
@@ -29,21 +29,16 @@ function App() {
 
     for (let item of data) {
       const monday = {'monday': convertData(item.Monday)}
-      console.log(monday)
       const tuesday = {'tuesday': convertData(item.Tuesday)}
       const wednesday = {'wednesday': convertData(item.Wednesday)}
       const thursday = {'thursday': convertData(item.Thursday)}
       const friday = {'friday': convertData(item.Friday)}
       item.availability = {monday, tuesday, wednesday, thursday, friday}
     }
-    console.log(data)
+
     let created = data.map(item => new Student(item.Id, item.Name, item.Grade, item.Goal, item.availability))
     setStudents(created)
   }
-
-  // useEffect(() => {
-  //   console.log(rawData)
-  // }, [rawData])
 
   return (
     <div className="App">
