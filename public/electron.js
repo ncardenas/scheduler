@@ -109,7 +109,6 @@ ipcMain.handle("parse-csv", async(event, file) => {
     .pipe(csv({})) 
     .on('data', (data) => results.push(data))
     .on('end', () => {
-      console.log('1 ', results)
       resolve()
     });
   }) 
