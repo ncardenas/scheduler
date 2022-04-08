@@ -1,13 +1,14 @@
 import './App.css';
 import Form from './Form';
 import List from './List';
+import Student from './Student'
+
 //import Time from './Time'
 //import doSchedule from'./schedule'
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 function App() {
   const [students, setStudents] = useState([])
-  const [rawData, setRawData] = useState({})
 
   function convertData(data) {
     if (!data) return {}
@@ -25,25 +26,24 @@ function App() {
     const file_name = 'test/data/csvData1.csv'
     //const file_name = await window.api.openDialog()
     const data = await window.api.parseCSV(file_name)
-    
-    console.log(file_name)
-    console.log(data)
-    let times = []
+
     for (let item of data) {
-      console.log(item)
       const monday = {'monday': convertData(item.Monday)}
+      console.log(monday)
       const tuesday = {'tuesday': convertData(item.Tuesday)}
       const wednesday = {'wednesday': convertData(item.Wednesday)}
       const thursday = {'thursday': convertData(item.Thursday)}
       const friday = {'friday': convertData(item.Friday)}
-      times = [{monday, tuesday, wednesday, thursday, friday}, ...times]
-      item.Availability = times
+      item.availability = {monday, tuesday, wednesday, thursday, friday}
     }
- 
     console.log(data)
-    console.log(times)
-    setRawData(times)
+    let created = data.map(item => new Student(item.Id, item.Name, item.Grade, item.Goal, item.availability))
+    setStudents(created)
   }
+
+  // useEffect(() => {
+  //   console.log(rawData)
+  // }, [rawData])
 
   return (
     <div className="App">

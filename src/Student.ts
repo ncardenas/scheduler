@@ -2,19 +2,24 @@ import Time from './Time'
 
 class Student {
     id: number
+    name: string
     grade: number
+    disability: string
     availability: Object
 
-    constructor(student_id: number=0, grade: number=0) {
-        this.id = student_id
+    constructor(id: number=0, name: string='', grade: number=0, disability: string='', availability: Object={}) {
+        this.id = id
+        this.name = name
         this.grade = grade
-        this.availability = {
-            'monday': [],
-            'tuesday': [],
-            'wednesday': [],
-            'thursday': [],
-            'friday': []
-        }
+        this.disability = disability
+        this.availability = availability
+        // this.availability = {
+        //     'monday': [],
+        //     'tuesday': [],
+        //     'wednesday': [],
+        //     'thursday': [],
+        //     'friday': []
+        // }
     }
     
     addAvailability(day: string, start: Time, end: Time) : void {
@@ -26,7 +31,9 @@ class Student {
     }
 
     getId() : number { return this.id }
+    getName() : string { return this.name }
     getGrade() : number { return this.grade }
+    getDisability(): string { return this.disability }
 }
 
 export default Student
