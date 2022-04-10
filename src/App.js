@@ -5,13 +5,14 @@ import Student from './Student'
 import { doSchedule } from'./scheduler'
 import Time from './Time'
 import React, { useState, useEffect } from "react"
+import Calendar from './Calendar'
 
 function App() {
   const initStudents = []
   const [students, setStudents] = useState(initStudents)
   const [schedule, setSchedule] = useState()
   const [interval, setInterval] = useState(30)
-
+  const [showSchedule, setShowSchedule] = useState(false)
   function convertData(data) {
     if (!data) return
 
@@ -79,7 +80,8 @@ function App() {
         <button onClick={clicked}>Upload File</button>
         <button onClick={reset}>Reset</button>
         <button onClick={scheduleNow}>Schedule Now</button>
-        <List students={students}></List>
+        <button onClick={() => setShowSchedule(prev => !prev)}>Show Schedule</button>
+        {showSchedule? <Calendar schedule={schedule}/> : <List students={students}/> }
       </header>
     </div>
   );
