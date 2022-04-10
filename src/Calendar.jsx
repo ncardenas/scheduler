@@ -7,6 +7,12 @@ const Calendar = ({schedule}) => {
         return [time, ...days]
     }
 
+    function rows() {
+        // Time | Day
+        // time | group
+           
+    }
+
     return (
         <table>
             <tbody>
