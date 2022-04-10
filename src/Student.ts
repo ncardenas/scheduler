@@ -7,7 +7,7 @@ class Student {
     disability: string
     availability: Object
 
-    constructor(id: number=0, name: string='', grade: number=0, disability: string='', availability: Object={}) {
+    constructor(id: number=-1, name: string='empty', grade: number=-1, disability: string='empty', availability: Object={}) {
         this.id = id
         this.name = name
         this.grade = grade

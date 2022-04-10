@@ -8,7 +8,8 @@ import Student from './Student'
 import React, { useState } from "react"
 
 function App() {
-  const [students, setStudents] = useState([])
+  const initStudents = []
+  const [students, setStudents] = useState(initStudents)
 
   function convertData(data) {
     if (!data) return {}
@@ -23,8 +24,8 @@ function App() {
   }
 
   async function clicked () {
-    const file_name = 'test/data/csvData1.csv'
-    //const file_name = await window.api.openDialog()
+    //const file_name = 'test/data/csvData1.csv'
+    const file_name = await window.api.openDialog()
     const data = await window.api.parseCSV(file_name)
 
     for (let item of data) {
@@ -36,8 +37,13 @@ function App() {
       item.availability = {monday, tuesday, wednesday, thursday, friday}
     }
 
-    let created = data.map(item => new Student(item.Id, item.Name, item.Grade, item.Goal, item.availability))
-    setStudents(created)
+    const created = data.map(item => new Student(item.Id, item.Name, item.Grade, item.Goal, item.availability))
+    console.log(created)
+    setStudents(students => {return [...students, ...created]} )
+  }
+
+  function reset () {
+    setStudents(initStudents)
   }
 
   return (
@@ -45,6 +51,7 @@ function App() {
       <header className="App-header">
         <Form setStudents={setStudents}/>
         <button onClick={clicked}>Upload File</button>
+        <button onClick={reset}>Reset</button>
         <List students={students}></List>
       </header>
     </div>
