@@ -84,7 +84,7 @@ export function doSchedule(interval: number, blockout_times: Object, students: S
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday']
     for (const day of days) {
         const meetings = getMeetings(interval, blockout_times, students, day)
-        schedule.addMeetings(day, meetings)
+        schedule.setMeetings(day, meetings)
     }
     return schedule
 }

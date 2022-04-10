@@ -77,8 +77,8 @@ function App() {
       <header className="App-header">
        { /*<input type="numer" onChange={event => setInterval(event.target.value)}>Interval</input>*/}
         <Form setStudents={setStudents}/>
-        <button onClick={clicked}>Upload File</button>
         <button onClick={reset}>Reset</button>
+        <button onClick={clicked}>Upload File</button>
         <button onClick={scheduleNow}>Schedule Now</button>
         <button onClick={() => setShowSchedule(prev => !prev)}>Show Schedule</button>
         {showSchedule? <Calendar schedule={schedule}/> : <List students={students}/> }

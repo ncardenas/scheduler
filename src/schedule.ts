@@ -11,12 +11,17 @@ class Schedule {
         }
     }
 
-    addMeetings(day: string, meetings: Object[]): void {
-        this.meetings[day.toLowerCase()].push(meetings)
+    setMeetings(day: string, meetings: Object[]): void {
+        this.meetings[day.toLowerCase()] = meetings
     }
 
-    getMeetings(day: string): Object[] {
-        return this.meetings[day.toLowerCase()]
+    getMeetings(): Object
+    getMeetings(day: string): Object[]
+    getMeetings(day?: string): any {
+        if (day) {
+            return this.meetings[day.toLowerCase()]
+        }
+        return this.meetings
     }
 }
 
