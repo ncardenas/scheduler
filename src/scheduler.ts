@@ -40,6 +40,7 @@ export function blockTimes(blockout_times: Object[], meeting_intervals: Meeting[
         for (const meeting of meeting_intervals) {
             if (time['start'].equalTo(meeting.getStart()) && time['end'].equalTo(meeting.getEnd())) {
                 meeting.blockTime()
+                break
             }
         }
     }
@@ -60,10 +61,16 @@ export function addToIntervals(student: Student, add_me: Object, meeting_interva
 
 export function getMeetings(interval: number, blockout_times: Object, students: Student[], day: string) {
     var meeting_intervals = initializeIntervals(interval)
-    blockTimes(blockout_times[day], meeting_intervals)
+
+    if (blockout_times[day]) {
+        const updated_blockout_times = breakUpTimes(interval, blockout_times[day])
+        blockTimes(updated_blockout_times, meeting_intervals)
+    }
 
     for (const student of students) {
-        var student_availability = breakUpTimes(interval, student.getAvailability(day))
+        let times = student.getAvailability(day)
+        if (!times) continue
+        let student_availability = breakUpTimes(interval, times) 
         for (const a of student_availability) {
             addToIntervals(student ,a, meeting_intervals)
         }
