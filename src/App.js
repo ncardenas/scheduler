@@ -73,16 +73,16 @@ function App() {
   }, [schedule])
 
   return (
-    <div className="App">
-      <header className="App-header">
-       { /*<input type="numer" onChange={event => setInterval(event.target.value)}>Interval</input>*/}
-        <Form setStudents={setStudents}/>
-        <button onClick={reset}>Reset</button>
-        <button onClick={clicked}>Upload File</button>
-        <button onClick={scheduleNow}>Schedule Now</button>
-        <button onClick={() => setShowSchedule(prev => !prev)}>Show Schedule</button>
-        {showSchedule? <Calendar schedule={schedule}/> : <List students={students}/> }
-      </header>
+    // <div className="App">
+    //   <header className="App-header">
+    <div>
+      { /*<input type="numer" onChange={event => setInterval(event.target.value)}>Interval</input>*/}
+      <Form setStudents={setStudents}/>
+      <button onClick={reset}>Reset</button>
+      <button onClick={clicked}>Upload File</button>
+      <button onClick={scheduleNow}>Schedule Now</button>
+      <button onClick={() => setShowSchedule(prev => !prev)}>Show Schedule</button>
+      {showSchedule? <Calendar schedule={schedule}/> : <List students={students}/> }
     </div>
   );
 }
