@@ -1,16 +1,21 @@
+import Schedule from './Schedule'
+
 const Calendar = ({schedule}) => {
     function header() {
+        console.log(schedule)
         let days = Object.keys(schedule.getMeetings())
-        console.log(days)
-        days = days.map(day => <th>{day}</th>)
-        const time = <th>time</th>
+        days = days.map( (day, index) => <th key={index} >{day}</th>)
+        const time = <th key='time'>time</th>
         return [time, ...days]
     }
 
     function rows() {
         // Time | Day
         // time | group
-           
+        const entries = Object.entries(schedule)
+        const result = entries.map( (day, index) => {
+
+        })
     }
 
     return (
@@ -22,7 +27,7 @@ const Calendar = ({schedule}) => {
                 </tr>
 
                 <tr>
-
+                {rows()}
                 </tr>
 
             </tbody>
