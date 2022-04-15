@@ -1,5 +1,4 @@
 import Schedule from './Schedule'
-import styles from './Calendar.scss'
 
 const Calendar = ({schedule}) => {
     function header() {
@@ -42,9 +41,14 @@ const Calendar = ({schedule}) => {
     }
 
     return (
-        <div className={styles.header}>
-            {header()}
-            {times()}
+        <div>
+            <div>Time</div>
+            <div>Monday</div>
+            <div>Tuesday</div>
+            <div>Wednesday</div>
+            <div>Thursday</div>
+            <div>Friday</div>
+            {/* {times()} */}
         </div>
         
     )
