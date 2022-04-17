@@ -5,7 +5,7 @@ const List = ({students}) => (
                 <th>ID</th>
                 <th>Name</th>
                 <th>Grade</th>
-                <th>Disability</th>
+                <th>Topic</th>
             </tr>
 
             {students.map((student,index) => (
@@ -13,7 +13,7 @@ const List = ({students}) => (
                     <td>{student.getId()}</td>
                     <td>{student.getName()}</td>
                     <td>{student.getGrade()}</td>
-                    <td>{student.getDisability()}</td>
+                    <td>{student.getTopic()}</td>
                     {/* <>{student.getAvailability('monday')}</> */}
                 </tr>
             ))}

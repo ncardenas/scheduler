@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import Time from './Time'
 import Student from './Student'
-
+import Form from './Form'
 import { BasicTable } from './BasicTable'
-import MOCK_DATA from './MOCK_DATA.json'
-import { COLUMNS } from './columns'
+
 
 function App() {
     const initStudents = []
@@ -13,7 +12,7 @@ function App() {
     const [columns, setColumns] = useState([])
     const [filteredData, setFilteredData] = useState([])
 
-    function convertData(data) {
+    function convertDay(data) {
         if (!data) return
     
         let properties = data.split(',') || data
@@ -40,42 +39,53 @@ function App() {
         return Object.fromEntries(array)
     }
 
-    async function uploadFile () {
-        const file_name = 'test/data/csvData1.csv'
-       // const file_name = await window.api.openDialog()
-        const raw_data = await window.api.parseCSV(file_name)
-
-        const temp = []
+    async function convertRawData(raw_data) {
+        const format_data = []
         for (let item of raw_data) {
             item = lowerCaseKeys(item)
             item.availability = {
-                ...(item.Monday) && {'monday': convertData(item.Monday)}, 
-                ...(item.Tuesday) && {'tuesday': convertData(item.Tuesday)},
-                ...(item.Wednesday) && {'wednesday': convertData(item.Wednesday)},
-                ...(item.Thursday) && {'thursday': convertData(item.Thursday)},
-                ...(item.Friday) && {'friday': convertData(item.Friday)}
+                ...(item.Monday) && {'monday': convertDay(item.Monday)}, 
+                ...(item.Tuesday) && {'tuesday': convertDay(item.Tuesday)},
+                ...(item.Wednesday) && {'wednesday': convertDay(item.Wednesday)},
+                ...(item.Thursday) && {'thursday': convertDay(item.Thursday)},
+                ...(item.Friday) && {'friday': convertDay(item.Friday)}
             }
-            temp.push(item)
-       }
+            format_data.push(item)
+        }
+        return format_data
+    }
 
-       const column_names = ['id', 'grade', 'topic', 'day', 'start_time', 'end_time']
-       const columns_temp = temp[0]
-        ? Object.keys(temp[0])
-        .filter(key => column_names.includes(key))
-        .map((key) => {
-            return { Header: key, accessor: key }
-        }) : []
+    async function makeColumns(parsed_data) {
+        const column_names = ['id', 'name', 'grade', 'topic', 'day', 'start_time', 'end_time']
+        const columns_temp = parsed_data[0]
+         ? Object.keys(parsed_data[0])
+         .filter(key => column_names.includes(key))
+         .map((key) => {
+             return { Header: key, accessor: key }
+         }) : []
+        
+        return columns_temp
+    }
 
-       setColumns(columns_temp)
-       setFilteredData(temp)
+    async function makeStudents(data) {
+        return data.map(item => new Student(item.Id, item.Name, item.Grade, item.Goal, item.availability))
+    }
 
-       const created = raw_data.map(item => new Student(item.Id, item.Name, item.Grade, item.Goal, item.availability))
-       setStudents(students => {return [...students, ...created]} )
+    async function uploadFile () {
+        // const file_name = await window.api.openDialog()
+        const file_name = 'test/data/csvData1.csv'
+        const raw_data = await window.api.parseCSV(file_name)
+        const parsed_data = await convertRawData(raw_data)
+        const _columns = await makeColumns(parsed_data)
+        const _students = await makeStudents(raw_data)
+
+        setStudents(students => {return [...students, ..._students]} )
+        setColumns(_columns)
+        setFilteredData(parsed_data)
     }
 
     useEffect(() => console.log(students), [students])
     useEffect(() => console.log(filteredData), [filteredData])
-
 
     function reset () {
         setStudents(initStudents)
@@ -84,8 +94,10 @@ function App() {
 
     return (
         <div>
+            <Form setStudents={setStudents}/>
             <button onClick={reset}>Reset</button>
             <button onClick={uploadFile}>Upload File</button>
+
             <BasicTable c={columns} d={filteredData} />
         </div>
     )

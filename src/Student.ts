@@ -4,26 +4,25 @@ class Student {
     id: number
     name: string
     grade: number
-    disability: string
+    topic: string
     availability: Object
 
-    constructor(id: number=-1, name: string='empty', grade: number=-1, disability: string='empty', availability: Object={}) {
+    constructor(id: number=-1, name: string='empty', grade: number=-1, topic: string='empty', availability: Object={}) {
         this.id = id
         this.name = name
         this.grade = grade
-        this.disability = disability
+        this.topic = topic
         this.availability = availability
-        // this.availability = {
-        //     'monday': [],
-        //     'tuesday': [],
-        //     'wednesday': [],
-        //     'thursday': [],
-        //     'friday': []
-        // }
     }
-    
+
     addAvailability(day: string, start: Time, end: Time) : void {
-        this.availability[day.toLowerCase()].push( {'start': start, 'end': end} )
+        const lower_day = day.toLowerCase()
+        if (lower_day in this.availability) {
+            this.availability[lower_day].push( {'start': start, 'end': end} )
+        }
+        else {
+            this.availability[lower_day] = {'start': start, 'end': end} 
+        }
     }
 
     getAvailability(day: string) : Object[] {
@@ -33,7 +32,17 @@ class Student {
     getId() : number { return this.id }
     getName() : string { return this.name }
     getGrade() : number { return this.grade }
-    getDisability(): string { return this.disability }
+    getTopic(): string { return this.topic }
+
+    // toJson() : Object {
+    //     return {
+    //         'id': this.id,
+    //         'name': this.name,
+    //         'grade': this.grade,
+    //         'topic': this.topic,
+
+    //     }
+    // }
 }
 
 export default Student
