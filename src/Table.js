@@ -50,49 +50,62 @@ function DefaultColumnFilter({
  )
 }
 
+// function DefaultColumnInput ({})
+
 function Table() {
 
  const data = React.useMemo(
      () => [
        {
-         col1: 'Minsk',
-         col2: '27',
-         col3: 'rain',
-         col4: '739',
-         col5: '90',
+         col1: '1',
+         col2: 'Nick',
+         col3: '2',
+         col4: 'Speach',
+         col5: 'Monday',
+         col6: '0800',
+         col7: '1300',
        },
        {
-         col1: 'Vilnius',
-         col2: '30',
-         col3: 'rain',
-         col4: '740',
-         col5: '87',
+         col1: '2',
+         col2: 'Ashley',
+         col3: '2',
+         col4: 'Speach',
+         col5: 'Monday',
+         col6: '0800',
+         col7: '1300',
        },
        {
-         col1: 'London',
-         col2: '23',
-         col3: 'rain',
-         col4: '743',
-         col5: '77',
+         col1: '3',
+         col2: 'Luna',
+         col3: '2',
+         col4: 'Speach',
+         col5: 'Monday',
+         col6: '0800',
+         col7: '1300',
        },
        {
-         col1: 'Madrid',
-         col2: '34',
-         col3: 'sunny',
-         col4: '738',
-         col5: '40',
+         col1: '4',
+         col2: 'Gab',
+         col3: '2',
+         col4: 'Speach',
+         col5: 'Monday',
+         col6: '0800',
+         col7: '1300',
        },
        {
-         col1: 'Warsaw',
-         col2: '25',
-         col3: 'heavy rain',
-         col4: '739',
-         col5: '88',
+         col1: '5',
+         col2: 'Landon',
+         col3: '2',
+         col4: 'Speach',
+         col5: 'Monday',
+         col6: '0800',
+         col7: '1300',
        },
      ],
      []
  )
 
+ // Header Groups
  const columns = React.useMemo(
      () => [
        {
@@ -116,24 +129,22 @@ function Table() {
          accessor: 'col5',
        },
        {
-        Header: 'Hour',
+        Header: 'Start Time',
         accessor: 'col6',
       },
       {
-        Header: 'Minute',
+        Header: 'End Time',
         accessor: 'col7',
       },
      ],
      []
  )
 
- const defaultColumn = React.useMemo(
-   () => ({
+ const defaultColumn = React.useMemo( () => ({
      // Let's set up our default Filter UI
      Filter: DefaultColumnFilter,
-   }),
-   []
- )
+    //  Input: DefaultInput,
+   }),[])
 
  const {
    getTableProps,
@@ -181,9 +192,6 @@ function Table() {
                     <div>{column.canFilter ? column.render('Filter') : null}</div>
                    </th>
                ))}
-               <td>
-               <button type='submit'>Add</button>
-               </td>
              </tr>
          ))}
                                        

@@ -1,23 +1,11 @@
 import React, { useMemo }from 'react'
 import { useTable } from 'react-table'
-import MOCK_DATA from './MOCK_DATA.json'
-import { COLUMNS } from './columns'
 import './table.css'
 
-export const BasicTable = (students) => {
-    
-    const columns = useMemo(() => COLUMNS, [])
-    //const data = useMemo(() => MOCK_DATA, [])
-   // const columns = useMemo(() => 
-    //students[0] 
-    //? Object.keys(students[0])
-        //.map((key) => {
-            //return { Header: key, accessor: key }
-        //})
-    //: [],
-    //[students])
+export const BasicTable = ({ c, d }) => {
 
-    const data = useMemo(() => students, [students])
+    const columns = useMemo(() => c, [c])
+    const data = useMemo(() => d, [d])
 
    const {
         getTableProps,
