@@ -36,6 +36,9 @@ class Meeting {
         return this.end
     }
 
+    equalTo(rhs: Meeting): Boolean {
+        return this.start.equalTo(rhs.getStart()) && this.end.equalTo(rhs.getEnd())
+    }
 }
 
 export default Meeting

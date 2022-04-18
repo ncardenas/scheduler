@@ -1,3 +1,6 @@
+import Meeting from "./Meeting"
+import Time from "./Time"
+
 class Schedule {
     meetings: Object
 
@@ -23,6 +26,19 @@ class Schedule {
         }
         return this.meetings
     }
+
+    getStudents(day: string, start: Time, end: Time): Object[] {
+        const lower_day = day.toLowerCase()
+        const meetings:[Meeting] = this.meetings[lower_day]
+
+        for (const meeting of meetings) {
+            if (meeting.equalTo(new Meeting(start, end))) {
+                return meeting.getStudents()
+            }
+        }
+        return []
+    }
+
 }
 
 export default Schedule
