@@ -94,7 +94,7 @@ function App() {
 
     return (
         <div>
-            <Form setStudents={setStudents}/>
+            <Form setStudents={setStudents} setFilteredData={setFilteredData}/>
             <button onClick={reset}>Reset</button>
             <button onClick={uploadFile}>Upload File</button>
 
