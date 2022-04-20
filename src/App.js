@@ -17,14 +17,9 @@ function App() {
     const [columns, setColumns] = useState([])
     const [filteredData, setFilteredData] = useState([])
 
-    const [studentColumns, setStudentColumns] = useState([])
-    const [studentData, setStudentData] = useState([])
-    const [scheduleColumns, setScheduleColumns] = useState([])
-    const [scheduleData, setScheduleData] = useState([])
-
     function convertDay(data) {
-        if (!data) return
-    
+        if (!data) return []
+
         let properties = data.split(',') || data
         let obj = []
         properties.forEach(prop => {
@@ -50,19 +45,22 @@ function App() {
     }
 
     function convertRawData(raw_data) {
-        const format_data = []
+        const formattedData = []
         for (let item of raw_data) {
             item = lowerCaseKeys(item)
-            item.availability = {
-                ...(item.Monday) && {'monday': convertDay(item.Monday)}, 
-                ...(item.Tuesday) && {'tuesday': convertDay(item.Tuesday)},
-                ...(item.Wednesday) && {'wednesday': convertDay(item.Wednesday)},
-                ...(item.Thursday) && {'thursday': convertDay(item.Thursday)},
-                ...(item.Friday) && {'friday': convertDay(item.Friday)}
-            }
-            format_data.push(item)
+
+            const availability = {}
+            availability.monday = convertDay(item.monday)
+            availability.tuesday = convertDay(item.tuesday)
+            availability.wednesday = convertDay(item.wednesday)
+            availability.thursday = convertDay(item.thursday)
+            availability.friday = convertDay(item.friday)
+
+            item.availability = availability
+            formattedData.push(item)
         }
-        return format_data
+
+        return formattedData
     }
 
     function makeColumns(column_names) {
@@ -71,25 +69,24 @@ function App() {
         : []
     }
 
-    function makeStudents(data) {
-        return data.map(item => new Student(item.Id, item.Name, item.Grade, item.Goal, item.availability))
+    function makeStudents(raw_data) {
+        const data = convertRawData(raw_data)
+        console.log(data)
+        return data.map(item => new Student(item.id, item.name, item.grade, item.topic, item.availability))
     }
 
     async function uploadFile () {
         // const file_name = await window.api.openDialog()
-        const file_name = 'test/data/csvData1.csv'
+        const file_name = 'test/data/MOCK_DATA2.csv'
         const raw_data = await window.api.parseCSV(file_name)
-        const parsed_data = convertRawData(raw_data)
+        const uploadedStudents = makeStudents(raw_data)
+        console.log(uploadedStudents)
+
+        setStudents(students => {return [...students, ...uploadedStudents]} )
+
         const column_names = ['id', 'name', 'grade', 'topic', 'day', 'start_time', 'end_time']
         const _columns = makeColumns(column_names)
-        const _students = makeStudents(raw_data)
-
-        setStudents(students => {return [...students, ..._students]} )
-        setStudentColumns(_columns)
-        setStudentData(parsed_data)
-
         setColumns(_columns)
-        setFilteredData(parsed_data)
     }
 
     useEffect(() => console.log(students), [students])
@@ -112,63 +109,6 @@ function App() {
         setSchedule(result)
         console.log(result)
     }
-
-    // function formatTime(start, end) {
-    //     const time_start = start.getHour().toString() + start.getMinute().toString()
-    //     const time_end = end.getHour().toString() + end.getMinute().toString()
-    //     return time_start + ' to ' + time_end
-    // }
-
-    // function formatStudents(students) {
-    //     if (!students) return ''
-
-    // }
-
-    // // [{Time, Monday, Tuesday, Wednesday, Thursday, Friday}]
-    // function formatScheduler(schedule) {
-    //     const meetings = schedule.getMeetings('monday')
-    //     // time slots are the same accross days so we can iterate over them
-    //     // TODO: Get students at a specific meeting time
-
-    //     const result = []
-    //     for (const meeting of meetings) {
-    //         const start = meeting.getStart()
-    //         const end = meeting.getEnd()
-    //         const time = formatTime(start, end)
-            
-    //         const monday_students = schedule.getStudents('monday', start, end)
-    //         const tuesday_students = schedule.getStudents('tuesday', start, end)
-    //         const wednesday_students = schedule.getStudents('wednesday', start, end)
-    //         const thursday_students = schedule.getStudents('thursday', start, end)
-    //         const friday_students = schedule.getStudents('friday', start, end)
-
-    //         result.push({'Time': time, 'Monday': monday_students, 'Tuesday': tuesday_students,
-    //                     'Wednesday': wednesday_students, 'Thursday': thursday_students,
-    //                     'Friday': friday_students})
-    //     }
-    //     console.log(result)
-    //     return result
-    // }
-
-    // useEffect(() => {
-    //     const columns_names = ['Time', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-    //     const _columns = makeColumns(columns_names)
-    //     const formatted = formatScheduler(schedule)
-    //     console.log(formatted)
-    //     setScheduleColumns(_columns)
-    //     setScheduleData(formatted)
-    // },[showSchedule])
-
-    useEffect(() => {
-        if(showSchedule) {
-            setColumns(scheduleColumns)
-            setFilteredData(scheduleData)
-        } 
-        else {
-            setColumns(studentColumns)
-            setFilteredData(studentData)
-        }
-    }, [showSchedule])
 
     return (
         <div>

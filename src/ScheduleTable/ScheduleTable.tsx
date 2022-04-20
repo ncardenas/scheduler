@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 import { BasicTable } from '../BasicTable'
-import Schedule from '../Schedule'
 import { getColumns } from './Columns'
 
 const ScheduleTable = ({ schedule }) => {
-    const [columns, setColumns] = useState(getColumns())
+    const columns = getColumns()
     const [data, setData] = useState([])
 
     function formatTime(start, end) {
