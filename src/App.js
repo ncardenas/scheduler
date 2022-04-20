@@ -4,8 +4,9 @@ import Time from './Time'
 import Student from './Student'
 import Schedule from './Schedule'
 import Form from './Form'
-import { BasicTable } from './BasicTable'
 import { doSchedule } from'./scheduler'
+import { BasicTable } from './BasicTable'
+import ScheduleTable from './ScheduleTable/ScheduleTable'
 
 function App() {
     const initStudents = []
@@ -112,51 +113,51 @@ function App() {
         console.log(result)
     }
 
-    function formatTime(start, end) {
-        const time_start = start.getHour().toString() + start.getMinute().toString()
-        const time_end = end.getHour().toString() + end.getMinute().toString()
-        return time_start + ' to ' + time_end
-    }
+    // function formatTime(start, end) {
+    //     const time_start = start.getHour().toString() + start.getMinute().toString()
+    //     const time_end = end.getHour().toString() + end.getMinute().toString()
+    //     return time_start + ' to ' + time_end
+    // }
 
-    function formatStudents(students) {
-        if (!students) return ''
+    // function formatStudents(students) {
+    //     if (!students) return ''
 
-    }
+    // }
 
-    // [{Time, Monday, Tuesday, Wednesday, Thursday, Friday}]
-    function formatScheduler(schedule) {
-        const meetings = schedule.getMeetings('monday')
-        // time slots are the same accross days so we can iterate over them
-        // TODO: Get students at a specific meeting time
+    // // [{Time, Monday, Tuesday, Wednesday, Thursday, Friday}]
+    // function formatScheduler(schedule) {
+    //     const meetings = schedule.getMeetings('monday')
+    //     // time slots are the same accross days so we can iterate over them
+    //     // TODO: Get students at a specific meeting time
 
-        const result = []
-        for (const meeting of meetings) {
-            const start = meeting.getStart()
-            const end = meeting.getEnd()
-            const time = formatTime(start, end)
+    //     const result = []
+    //     for (const meeting of meetings) {
+    //         const start = meeting.getStart()
+    //         const end = meeting.getEnd()
+    //         const time = formatTime(start, end)
             
-            const monday_students = schedule.getStudents('monday', start, end)
-            const tuesday_students = schedule.getStudents('tuesday', start, end)
-            const wednesday_students = schedule.getStudents('wednesday', start, end)
-            const thursday_students = schedule.getStudents('thursday', start, end)
-            const friday_students = schedule.getStudents('friday', start, end)
+    //         const monday_students = schedule.getStudents('monday', start, end)
+    //         const tuesday_students = schedule.getStudents('tuesday', start, end)
+    //         const wednesday_students = schedule.getStudents('wednesday', start, end)
+    //         const thursday_students = schedule.getStudents('thursday', start, end)
+    //         const friday_students = schedule.getStudents('friday', start, end)
 
-            result.push({'Time': time, 'Monday': monday_students, 'Tuesday': tuesday_students,
-                        'Wednesday': wednesday_students, 'Thursday': thursday_students,
-                        'Friday': friday_students})
-        }
-        console.log(result)
-        return result
-    }
+    //         result.push({'Time': time, 'Monday': monday_students, 'Tuesday': tuesday_students,
+    //                     'Wednesday': wednesday_students, 'Thursday': thursday_students,
+    //                     'Friday': friday_students})
+    //     }
+    //     console.log(result)
+    //     return result
+    // }
 
-    useEffect(() => {
-        const columns_names = ['Time', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-        const _columns = makeColumns(columns_names)
-        const formatted = formatScheduler(schedule)
-        console.log(formatted)
-        setScheduleColumns(_columns)
-        setScheduleData(formatted)
-    },[showSchedule])
+    // useEffect(() => {
+    //     const columns_names = ['Time', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+    //     const _columns = makeColumns(columns_names)
+    //     const formatted = formatScheduler(schedule)
+    //     console.log(formatted)
+    //     setScheduleColumns(_columns)
+    //     setScheduleData(formatted)
+    // },[showSchedule])
 
     useEffect(() => {
         if(showSchedule) {
@@ -176,7 +177,7 @@ function App() {
             <button onClick={uploadFile}>Upload File</button>
             <button onClick={scheduleNow}>Schedule Now</button>
             <button onClick={() => setShowSchedule(prev => !prev)}>Show Schedule</button>
-            <BasicTable c={columns} d={filteredData} />
+            {showSchedule ? <ScheduleTable schedule={schedule}/> : <BasicTable c={columns} d={filteredData} />}
         </div>
     )
 }
