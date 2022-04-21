@@ -5,17 +5,14 @@ import Student from './Student'
 import Schedule from './Schedule'
 import Form from './Form'
 import { doSchedule } from'./scheduler'
-import { BasicTable } from './BasicTable'
 import ScheduleTable from './ScheduleTable/ScheduleTable'
+import StudentTable from './StudentTable/StudentTable'
 
 function App() {
     const initStudents = []
+    const initSchedule = new Schedule()
     const [students, setStudents] = useState(initStudents)
-    const [showSchedule, setShowSchedule] = useState(false)
-    const [schedule, setSchedule] = useState(new Schedule())
-
-    const [columns, setColumns] = useState([])
-    const [filteredData, setFilteredData] = useState([])
+    const [schedule, setSchedule] = useState(initSchedule)
 
     function convertDay(data) {
         if (!data) return []
@@ -63,15 +60,8 @@ function App() {
         return formattedData
     }
 
-    function makeColumns(column_names) {
-        return column_names
-        ? column_names.map(name => {return { Header:name, accessor: name }})
-        : []
-    }
-
     function makeStudents(raw_data) {
         const data = convertRawData(raw_data)
-        console.log(data)
         return data.map(item => new Student(item.id, item.name, item.grade, item.topic, item.availability))
     }
 
@@ -80,24 +70,18 @@ function App() {
         const file_name = 'test/data/MOCK_DATA2.csv'
         const raw_data = await window.api.parseCSV(file_name)
         const uploadedStudents = makeStudents(raw_data)
-        console.log(uploadedStudents)
 
-        setStudents(students => {return [...students, ...uploadedStudents]} )
-
-        const column_names = ['id', 'name', 'grade', 'topic', 'day', 'start_time', 'end_time']
-        const _columns = makeColumns(column_names)
-        setColumns(_columns)
+        const unscheduled_students = [...students, ...uploadedStudents]
+        setStudents(unscheduled_students)
+        scheduleNow(unscheduled_students)
     }
-
-    useEffect(() => console.log(students), [students])
-    useEffect(() => console.log(filteredData), [filteredData])
 
     function reset () {
         setStudents(initStudents)
-        setFilteredData([])
+        setSchedule(initSchedule)
     }
 
-    function scheduleNow() {
+    function scheduleNow(unscheduled_students) {
         const blockout_times = {
             'monday': [
             {'start': new Time(10), 'end': new Time(11)},
@@ -105,7 +89,7 @@ function App() {
             ],
         }
         const interval = 30
-        const result = doSchedule(interval, blockout_times, students)
+        const result = doSchedule(interval, blockout_times, unscheduled_students)
         setSchedule(result)
         console.log(result)
     }
@@ -115,9 +99,9 @@ function App() {
             {/* <Form setStudents={setStudents} setFilteredData={setFilteredData}/> */}
             <button onClick={reset}>Reset</button>
             <button onClick={uploadFile}>Upload File</button>
-            <button onClick={scheduleNow}>Schedule Now</button>
-            <button onClick={() => setShowSchedule(prev => !prev)}>Show Schedule</button>
-            {showSchedule ? <ScheduleTable schedule={schedule}/> : <BasicTable c={columns} d={filteredData} />}
+
+            <StudentTable students={students} />
+            <ScheduleTable schedule={schedule}/>
         </div>
     )
 }
