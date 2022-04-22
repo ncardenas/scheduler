@@ -41,7 +41,6 @@ class Meeting {
     }
 
     toString(): string {
-        console.log(this.start.toString())
         return this.start.toString() + ' to ' + this.end.toString()
     }
 }
