@@ -91,7 +91,6 @@ function App() {
         const interval = 30
         const result = doSchedule(interval, blockout_times, unscheduled_students)
         setSchedule(result)
-        console.log(result)
     }
 
     return (

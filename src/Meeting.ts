@@ -39,6 +39,11 @@ class Meeting {
     equalTo(rhs: Meeting): Boolean {
         return this.start.equalTo(rhs.getStart()) && this.end.equalTo(rhs.getEnd())
     }
+
+    toString(): string {
+        console.log(this.start.toString())
+        return this.start.toString() + ' to ' + this.end.toString()
+    }
 }
 
 export default Meeting

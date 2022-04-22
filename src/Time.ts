@@ -41,6 +41,14 @@ class Time {
     lessThan(rhs: Time): boolean {
         return this.getTimeInMins() < rhs.getTimeInMins()
     }
+
+    toString() : string {
+        return toString(this.getHour()) + ':' + toString(this.getMinute())
+    }
+}
+
+function toString(num: number): string {
+    return (num < 10) ? '0' + num.toString() : num.toString()
 }
 
 export default Time
