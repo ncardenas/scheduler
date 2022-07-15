@@ -8,6 +8,7 @@ const StudentTable = ({ students }) => {
 
     useEffect(() => {
         const result = []
+        console.log(students)
         for (const student of students) {
             const formatAvailability = []
             for (const day of Object.keys(student.availability)) {

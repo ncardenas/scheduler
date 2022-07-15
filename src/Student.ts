@@ -21,7 +21,7 @@ class Student {
             this.availability[lower_day].push( {'start': start, 'end': end} )
         }
         else {
-            this.availability[lower_day] = {'start': start, 'end': end} 
+            this.availability[lower_day] = [{'start': start, 'end': end}]
         }
     }
 

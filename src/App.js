@@ -13,6 +13,7 @@ function App() {
     const initSchedule = new Schedule()
     const [students, setStudents] = useState(initStudents)
     const [schedule, setSchedule] = useState(initSchedule)
+    const [newStudent, setNewStudent] = useState(false)
 
     function convertDay(data) {
         if (!data) return []
@@ -70,7 +71,7 @@ function App() {
         const file_name = 'test/data/MOCK_DATA2.csv'
         const raw_data = await window.api.parseCSV(file_name)
         const uploadedStudents = makeStudents(raw_data)
-
+        console.log(raw_data)
         const unscheduled_students = [...students, ...uploadedStudents]
         setStudents(unscheduled_students)
         scheduleNow(unscheduled_students)
@@ -84,9 +85,13 @@ function App() {
     function scheduleNow(unscheduled_students) {
         const blockout_times = {
             'monday': [
+            {'start': new Time(0,30), 'end': new Time(1)},
             {'start': new Time(10), 'end': new Time(11)},
             {'start': new Time(12), 'end': new Time(13)}
             ],
+            'friday': [
+                {'start': new Time(1), 'end': new Time(1,30)},
+            ]
         }
         const interval = 30
         const result = doSchedule(interval, blockout_times, unscheduled_students)
@@ -95,12 +100,20 @@ function App() {
 
     return (
         <div>
-            {/* <Form setStudents={setStudents} setFilteredData={setFilteredData}/> */}
+            <button onClick={()=>setNewStudent(true)}>New Student</button>
             <button onClick={reset}>Reset</button>
             <button onClick={uploadFile}>Upload File</button>
-
-            <StudentTable students={students} />
-            <ScheduleTable schedule={schedule}/>
+            {newStudent?
+            <div>
+                <button onClick={()=>setNewStudent(false)}>Submit</button>
+                <Form setStudents={setStudents} />
+            </div>
+            :
+            <div>
+                <StudentTable students={students} />
+                <ScheduleTable schedule={schedule}/>
+            </div>
+            }
         </div>
     )
 }
