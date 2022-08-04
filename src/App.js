@@ -100,16 +100,16 @@ function App() {
 
     return (
         <div>
-            <button onClick={()=>setNewStudent(true)}>New Student</button>
-            <button onClick={reset}>Reset</button>
-            <button onClick={uploadFile}>Upload File</button>
             {newStudent?
             <div>
-                <button onClick={()=>setNewStudent(false)}>Submit</button>
+                <button onClick={()=>setNewStudent(false)}>Back</button>
                 <Form setStudents={setStudents} />
             </div>
             :
             <div>
+                <button onClick={()=>setNewStudent(true)}>New Student</button>
+                <button onClick={reset}>Reset</button>
+                <button onClick={uploadFile}>Upload File</button>
                 <StudentTable students={students} />
                 <ScheduleTable schedule={schedule}/>
             </div>
