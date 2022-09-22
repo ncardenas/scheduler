@@ -1,19 +1,66 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import Grid from "@mui/material/Grid";
 
 import Time from './Time'
 import Student from './Student'
 import Schedule from './Schedule'
-import Form from './Form'
+import { GradeField, IDField, NameField } from './component/Fields';
+import { SubmitButton, UploadFileButton, ClearButton } from './component/Buttons';
+import { DateSelect } from './component/DateSelect';
+
 import { doSchedule } from'./scheduler'
 import ScheduleTable from './ScheduleTable/ScheduleTable'
 import StudentTable from './StudentTable/StudentTable'
 
+import IconButton from '@mui/material/IconButton';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
 function App() {
+    const [mode, setMode] = React.useState('light');
+    const colorMode = React.useMemo(
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        },
+      }),
+      [],
+    );
+  
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode,
+          },
+        }),
+      [mode],
+    );
+  
+    return (
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <MyApp />
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    );
+}
+  
+function MyApp() {
+    const theme = useTheme();
+    const colorMode = React.useContext(ColorModeContext);
+
     const initStudents = []
     const initSchedule = new Schedule()
+    const [name, setName] = useState('')
+    const [id, setID] = useState('')
+    const [grade, setGrade] = useState('')
     const [students, setStudents] = useState(initStudents)
     const [schedule, setSchedule] = useState(initSchedule)
-    const [newStudent, setNewStudent] = useState(false)
 
     function convertDay(data) {
         if (!data) return []
@@ -66,7 +113,7 @@ function App() {
         return data.map(item => new Student(item.id, item.name, item.grade, item.topic, item.availability))
     }
 
-    async function uploadFile () {
+    async function uploadFile() {
         // const file_name = await window.api.openDialog()
         const file_name = 'test/data/MOCK_DATA2.csv'
         const raw_data = await window.api.parseCSV(file_name)
@@ -77,9 +124,14 @@ function App() {
         scheduleNow(unscheduled_students)
     }
 
-    function reset () {
+    function handleClear() {
         setStudents(initStudents)
         setSchedule(initSchedule)
+    }
+
+    const handleSubmit = () => {
+        // TODO: Save Student Data
+        console.log('submit hit')
     }
 
     function scheduleNow(unscheduled_students) {
@@ -99,22 +151,34 @@ function App() {
     }
 
     return (
-        <div>
-            {newStudent?
-            <div>
-                <button onClick={()=>setNewStudent(false)}>Back</button>
-                <Form setStudents={setStudents} />
-            </div>
-            :
-            <div>
-                <button onClick={()=>setNewStudent(true)}>New Student</button>
-                <button onClick={reset}>Reset</button>
-                <button onClick={uploadFile}>Upload File</button>
+        <Grid container>
+            <Grid container margin={2} spacing={2}>
+                <Grid item>
+                    {theme.palette.mode} mode
+                    <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+                    {theme.palette.mode === 'dark' ? <CssBaseline /> : <Brightness4Icon />}
+                    </IconButton>
+                </Grid>
+            </Grid>
+            <Grid container margin={2} spacing={2}>
+                <IDField handleInputChange={setID}/>
+                <NameField handleInputChange={setName}/>
+                <GradeField handleInputChange={setGrade}/>
+            </Grid>
+            <Grid container margin={2} spacing={2}>
+                <DateSelect text='Start'/>
+                <DateSelect text='End'/>
+            </Grid>
+            <Grid container margin={2} spacing={2}>
+                <SubmitButton handleSubmit={handleSubmit}/>
+                <ClearButton handleClear={handleClear}/>
+                <UploadFileButton handleUploadFile={uploadFile}/>
+            </Grid>
+            <Grid container margin={2} spacing={2}>
                 <StudentTable students={students} />
                 <ScheduleTable schedule={schedule}/>
-            </div>
-            }
-        </div>
+            </Grid>
+        </Grid>
     )
 }
 
