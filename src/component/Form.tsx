@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Typography } from '@mui/material';
+import { Stack, Typography, Box } from '@mui/material';
 import {
   IDField,
   NameField,
@@ -45,6 +45,7 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
   const [times, setTimes] = useState<Availability[]>([]);
 
   const handleAddTime = () => {
+    // must match table headers to display data
     setTimes((prev) => [...prev, { day, startTime, endTime, action: 'todo' }]);
   };
 
@@ -67,6 +68,7 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
         <CloseFormButton handleClick={() => handleParentClose()} />
       </Stack>
       <Stack spacing={2} direction="row" justifyContent="center">
+        {/**TODO: Make Ids unique */}
         <IDField value={id} handleInputChange={(e) => setId(e.target.value)} />
         <NameField
           value={name}
@@ -94,7 +96,9 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
         <SelectTime value={endTime} />
         <AddTimeBlockButton handleClick={() => handleAddTime()} />
       </Stack>
-      <TimeTable times={times} />
+      <Box sx={{ height: '300px', overflowY: 'scroll' }}>
+        <TimeTable times={times} />
+      </Box>
     </Stack>
   );
 };
