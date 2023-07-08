@@ -1,26 +1,65 @@
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import React from 'react';
+import { Button } from '@mui/material';
 
-export const SubmitButton = ({ handleSubmit }) => (
-    <Grid item>
-        <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
-            Submit
-        </Button>
-    </Grid>
-)
+export const SubmitButton = ({ handleClick }) => (
+  <Button
+    variant="contained"
+    color="primary"
+    type="submit"
+    onClick={handleClick}
+  >
+    Submit
+  </Button>
+);
 
-export const ClearButton = ({ handleClear }) => (
-    <Grid item>
-        <Button variant="contained" color="primary" onClick={handleClear}>
-            Clear
-        </Button>
-    </Grid>
-)
+export const ClearButton = ({ handleClick }) => (
+  <Button variant="contained" color="primary" onClick={handleClick}>
+    Clear All
+  </Button>
+);
 
-export const UploadFileButton = ({ handleUploadFile }) => (
-    <Grid item>
-        <Button variant="contained" color="primary" onClick={handleUploadFile}>
-            Upload File
-        </Button>
-    </Grid>
-)
+export const UploadFileButton = ({ handleClick }) => (
+  <Button variant="contained" color="primary" onClick={handleClick}>
+    Upload File
+  </Button>
+);
+
+export const StudentButton = ({ buttonText, handleClick }) => (
+  <Button variant="contained" color="primary" onClick={handleClick}>
+    {buttonText}
+  </Button>
+);
+
+export const NewStudentButton = ({ handleClick }) => (
+  <Button
+    variant="contained"
+    color="primary"
+    type="submit"
+    onClick={handleClick}
+  >
+    New Student
+  </Button>
+);
+
+export const AddTimeBlockButton = ({ handleClick }) => (
+  <Button
+    variant="contained"
+    color="primary"
+    type="submit"
+    onClick={handleClick}
+  >
+    Add
+  </Button>
+);
+
+export const NewEntryButton = ({ handleClick }) => (
+  <Button variant="contained" color="primary" onClick={handleClick}>
+    New Entry
+  </Button>
+);
+
+export const ScheduleStudentsButton = ({ handleClick }) => (
+  <Button variant="contained" color="primary" onClick={handleClick}>
+    Schedule
+  </Button>
+);
