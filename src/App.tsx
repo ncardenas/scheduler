@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Stack, Modal } from '@mui/material';
 import { Form } from './component/Form';
-
+import { Availability } from './component/Form';
 import {
   ClearButton,
   ScheduleStudentsButton,
@@ -9,6 +9,14 @@ import {
 } from './component/Buttons';
 
 import StudentTable from './StudentTable/StudentTable';
+
+export interface StudentRecord {
+  id: string;
+  name: string;
+  grade: string;
+  topic: string;
+  times: Availability[];
+}
 
 function App() {
   const initStudents = [];
@@ -29,7 +37,9 @@ function App() {
     setFormOpen(false);
   };
 
-  const handleAddStudent = () => {};
+  const handleAddStudent = (student: StudentRecord) => {
+    setStudents((prev) => [...prev, student]);
+  };
 
   return (
     <Stack marginTop={2} spacing={2}>

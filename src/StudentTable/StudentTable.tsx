@@ -1,38 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { BasicTable } from '../BasicTable';
-import { getColumns } from './Columns';
+import React from 'react';
+import { StudentRecord } from '../App';
+import '../table.css';
 
-const StudentTable = ({ students }) => {
-  const columns = getColumns();
-  const [data, setData] = useState([]);
+interface Props {
+  students: StudentRecord[];
+}
+const StudentTable = ({ students }: Props) => {
+  // TODO: Make this a subset of the time table headers
+  const header_names = ['Unique ID', 'Name', 'Grade', 'Topic'];
+  const headers = header_names.map((name) => (
+    <th className="th" key={name}>
+      {name}
+    </th>
+  ));
 
-  useEffect(() => {
-    const result = [];
-    console.log(students);
-    for (const student of students) {
-      const formatAvailability = [];
-      for (const day of Object.keys(student.availability)) {
-        const availability = student.availability[day];
-        for (const meeting of availability) {
-          const start = meeting.start.toString();
-          const end = meeting.end.toString();
-          formatAvailability.push(
-            <div key={start}>{day + ': ' + start + ' to ' + end}</div>
-          );
-        }
-      }
-      result.push({
-        id: student.id,
-        name: student.name,
-        grade: student.grade,
-        topic: student.topic,
-        availability: formatAvailability,
-      });
-    }
-    setData(result);
-  }, [students]);
+  const rows = students.map((student, index) => (
+    <tr key={index}>
+      <td>{student.id}</td>
+      <td>{student.name}</td>
+      <td>{student.grade}</td>
+      <td>{student.topic}</td>
+    </tr>
+  ));
 
-  return <BasicTable c={columns} d={data} />;
+  return (
+    <table className="table">
+      <thead className="thead">
+        <tr className="tr">{headers}</tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </table>
+  );
 };
 
 export default StudentTable;

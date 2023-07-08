@@ -9,12 +9,7 @@ import {
   SelectGrade,
 } from './Fields';
 
-import {
-  AddTimeBlockButton,
-  SubmitButton,
-  CloseFormButton,
-  DeleteTimeEntry,
-} from './Buttons';
+import { AddTimeBlockButton, SubmitButton, CloseFormButton } from './Buttons';
 import { TimeTable } from './TimeTable';
 
 export interface Availability {
@@ -23,6 +18,7 @@ export interface Availability {
   endTime: string;
   delete: (tableData: Availability[], arg: number) => void;
 }
+
 export const Form = ({ handleParentSubmit, handleParentClose }) => {
   const validTopics = ['Speech', 'Another', 'AnotherAnother'];
   const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -69,6 +65,17 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
   };
 
   const handleSubmit = () => {
+    handleParentSubmit({
+      id,
+      name,
+      grade,
+      topic,
+      times,
+    });
+    clearForm();
+  };
+
+  const clearForm = () => {
     setId(defaults.id);
     setName(defaults.name);
     setGrade(defaults.grade);
@@ -76,7 +83,6 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
     setDay(defaults.day);
     setStartTime(defaults.startTime);
     setEndTime(defaults.endTime);
-    handleParentSubmit();
   };
 
   return (
