@@ -1,10 +1,10 @@
 {
+  "homepage": "http://ncardenas/scheduler",
   "name": "scheduler",
   "version": "0.1.0",
   "private": true,
   "author": "Nicolas Cardenas",
   "description": "Scheduler",
-  "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
     "@mui/icons-material": "^5.10.6",
@@ -68,6 +68,7 @@
     "electron-builder": "^22.14.13",
     "electron-rebuild": "^3.2.7",
     "electronmon": "^2.0.2",
+    "gh-pages": "^5.0.0",
     "install": "^0.13.0",
     "jest": "^27.5.1",
     "npm": "^8.19.2",

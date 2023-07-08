@@ -69,3 +69,9 @@ export const CloseFormButton = ({ handleClick }) => (
     Close
   </Button>
 );
+
+export const DeleteTimeEntry = ({ handleClick }) => (
+  <Button variant="contained" color="primary" onClick={handleClick}>
+    Delete
+  </Button>
+);

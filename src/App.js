@@ -33,11 +33,7 @@ function App() {
 
   return (
     <Stack marginTop={2} spacing={2}>
-      <Modal
-        disableBackdropClick="true"
-        open={formOpen}
-        onClose={() => setFormOpen(false)}
-      >
+      <Modal open={formOpen} onClose={() => setFormOpen(false)}>
         <Box
           sx={{
             backgroundColor: 'background.paper',
