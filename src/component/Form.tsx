@@ -92,8 +92,14 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
           value={day}
           handleInputChange={setDay}
         />
-        <SelectTime value={startTime} />
-        <SelectTime value={endTime} />
+        <SelectTime
+          value={startTime}
+          handleChange={(e) => setStartTime(e.target.value)}
+        />
+        <SelectTime
+          value={endTime}
+          handleChange={(e) => setEndTime(e.target.value)}
+        />
         <AddTimeBlockButton handleClick={() => handleAddTime()} />
       </Stack>
       <Box sx={{ height: '300px', overflowY: 'scroll' }}>

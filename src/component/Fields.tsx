@@ -90,6 +90,13 @@ export const SelectDay = ({ validDays, value, handleInputChange }) => {
   );
 };
 
-export const SelectTime = ({ value }) => {
-  return <input value={value} type="time" name="startdate" />;
+export const SelectTime = ({ value, handleChange }) => {
+  return (
+    <input
+      defaultValue={value}
+      type="time"
+      name="startdate"
+      onChange={handleChange}
+    />
+  );
 };
