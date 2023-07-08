@@ -1,5 +1,5 @@
-import React from 'react';
-import { Stack } from '@mui/material';
+import React, { useState } from 'react';
+import { Stack, Typography } from '@mui/material';
 import {
   IDField,
   NameField,
@@ -9,38 +9,78 @@ import {
   SelectGrade,
 } from './Fields';
 
-import { AddTimeBlockButton, SubmitButton } from './Buttons';
-export const Form = ({
-  disableForm,
-  setId,
-  setName,
-  validGrades,
-  grade,
-  setGrade,
-  validTopics,
-  topic,
-  setTopic,
-  validDays,
-  day,
-  setDay,
-}) => {
+import { AddTimeBlockButton, SubmitButton, CloseFormButton } from './Buttons';
+import { TimeTable } from './TimeTable';
+
+export interface Availability {
+  day: string;
+  startTime: string;
+  endTime: string;
+  action: string;
+}
+export const Form = ({ handleParentSubmit, handleParentClose }) => {
+  const validTopics = ['Speech', 'Another', 'AnotherAnother'];
+  const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const validGrades = ['First', 'Second', 'Third'];
+  const header = 'New Student';
+  const defaults = {
+    id: '',
+    name: '',
+    grade: validGrades[0],
+    topic: validTopics[0],
+    day: validDays[0],
+    startTime: '08:00',
+    endTime: '08:30',
+  };
+
+  const [id, setId] = useState(defaults.id);
+  const [name, setName] = useState(defaults.name);
+  const [grade, setGrade] = useState(defaults.grade);
+  const [topic, setTopic] = useState(defaults.topic);
+
+  const [day, setDay] = useState(defaults.day);
+  const [startTime, setStartTime] = useState(defaults.startTime);
+  const [endTime, setEndTime] = useState(defaults.endTime);
+
+  const [times, setTimes] = useState<Availability[]>([]);
+
+  const handleAddTime = () => {
+    setTimes((prev) => [...prev, { day, startTime, endTime, action: 'todo' }]);
+  };
+
+  const handleSubmit = () => {
+    setId(defaults.id);
+    setName(defaults.name);
+    setGrade(defaults.grade);
+    setTopic(defaults.topic);
+    setDay(defaults.day);
+    setStartTime(defaults.startTime);
+    setEndTime(defaults.endTime);
+    handleParentSubmit();
+  };
+
   return (
     <Stack margin={2} spacing={2}>
-      <SubmitButton handleClick={() => {}} />
+      <Typography align="center">{header}</Typography>
       <Stack spacing={2} direction="row" justifyContent="center">
-        <IDField disabled={disableForm} handleInputChange={setId} />
-        <NameField handleInputChange={setName} disabled={disableForm} />
+        <SubmitButton handleClick={() => handleSubmit()} />
+        <CloseFormButton handleClick={() => handleParentClose()} />
+      </Stack>
+      <Stack spacing={2} direction="row" justifyContent="center">
+        <IDField value={id} handleInputChange={(e) => setId(e.target.value)} />
+        <NameField
+          value={name}
+          handleInputChange={(e) => setName(e.target.value)}
+        />
         <SelectGrade
           validGrades={validGrades}
           value={grade}
           handleInputChange={setGrade}
-          disabled={disableForm}
         />
         <SelectTopic
           topics={validTopics}
           value={topic}
           handleInputChange={setTopic}
-          disabled={disableForm}
         />
       </Stack>
       {/* Day and Time */}
@@ -50,11 +90,11 @@ export const Form = ({
           value={day}
           handleInputChange={setDay}
         />
-        <SelectTime />
-        <SelectTime />
-        <AddTimeBlockButton handleClick={() => {}} />
+        <SelectTime value={startTime} />
+        <SelectTime value={endTime} />
+        <AddTimeBlockButton handleClick={() => handleAddTime()} />
       </Stack>
-      {/* TODO add table for times */}
+      <TimeTable times={times} />
     </Stack>
   );
 };

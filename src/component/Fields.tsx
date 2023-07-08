@@ -7,33 +7,33 @@ import {
   MenuItem,
 } from '@mui/material';
 
-export const IDField = ({ disabled, handleInputChange }) => {
+export const IDField = ({ value, handleInputChange }) => {
   return (
     <TextField
       id="id-field"
       name="ID"
       label="ID"
       type="text"
+      value={value}
       onChange={handleInputChange}
-      disabled={disabled}
     />
   );
 };
 
-export const NameField = ({ disabled, handleInputChange }) => {
+export const NameField = ({ value, handleInputChange }) => {
   return (
     <TextField
       id="name-input"
       name="name"
       label="Name"
       type="text"
+      value={value}
       onChange={handleInputChange}
-      disabled={disabled}
     />
   );
 };
 
-export const GradeField = ({ disabled, handleInputChange }) => {
+export const GradeField = ({ handleInputChange }) => {
   return (
     <TextField
       id="grade-input"
@@ -41,19 +41,13 @@ export const GradeField = ({ disabled, handleInputChange }) => {
       label="Grade"
       type="number"
       onChange={handleInputChange}
-      disabled={disabled}
     />
   );
 };
 
-export const SelectGrade = ({
-  disabled,
-  validGrades,
-  value,
-  handleInputChange,
-}) => {
+export const SelectGrade = ({ validGrades, value, handleInputChange }) => {
   return (
-    <FormControl disabled={disabled} size="small">
+    <FormControl size="small">
       <InputLabel>Grade</InputLabel>
       <Select value={value} onChange={(e) => handleInputChange(e.target.value)}>
         {validGrades.map((grade: string) => (
@@ -66,9 +60,9 @@ export const SelectGrade = ({
   );
 };
 
-export const SelectTopic = ({ disabled, topics, value, handleInputChange }) => {
+export const SelectTopic = ({ topics, value, handleInputChange }) => {
   return (
-    <FormControl disabled={disabled} size="small">
+    <FormControl size="small">
       <InputLabel>Topic</InputLabel>
       <Select value={value} onChange={(e) => handleInputChange(e.target.value)}>
         {topics.map((topic: string) => (
@@ -96,6 +90,6 @@ export const SelectDay = ({ validDays, value, handleInputChange }) => {
   );
 };
 
-export const SelectTime = () => {
-  return <input type="time" name="startdate" />;
+export const SelectTime = ({ value }) => {
+  return <input value={value} type="time" name="startdate" />;
 };

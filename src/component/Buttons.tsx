@@ -63,3 +63,9 @@ export const ScheduleStudentsButton = ({ handleClick }) => (
     Schedule
   </Button>
 );
+
+export const CloseFormButton = ({ handleClick }) => (
+  <Button variant="contained" color="primary" onClick={handleClick}>
+    Close
+  </Button>
+);
