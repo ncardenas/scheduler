@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Typography, Box, Button } from '@mui/material';
+import { Stack, Typography, Box } from '@mui/material';
 import {
   IDField,
   NameField,
@@ -21,7 +21,7 @@ export interface Availability {
   day: string;
   startTime: string;
   endTime: string;
-  action: JSX.Element;
+  delete: (tableData: Availability[], arg: number) => void;
 }
 export const Form = ({ handleParentSubmit, handleParentClose }) => {
   const validTopics = ['Speech', 'Another', 'AnotherAnother'];
@@ -49,21 +49,23 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
 
   const [times, setTimes] = useState<Availability[]>([]);
 
-  const handleDeleteTime = () => {
-    console.log('delete time');
+  const handleDeleteTime = (tableData, index) => {
+    const update = tableData.filter((_, i) => i !== index);
+    setTimes(update);
   };
 
   const handleAddTime = () => {
     // must match table headers to display data
-    setTimes((prev) => [
-      ...prev,
-      {
-        day,
-        startTime,
-        endTime,
-        action: <DeleteTimeEntry handleClick={handleDeleteTime} />,
-      },
-    ]);
+    const newEntry: Availability = {
+      day,
+      startTime,
+      endTime,
+      delete: handleDeleteTime,
+    };
+
+    const update = [...times, newEntry];
+
+    setTimes(update);
   };
 
   const handleSubmit = () => {
