@@ -26,7 +26,7 @@ function App() {
     formOpen: false,
   };
 
-  const [students, setStudents] = useState(defaults.students);
+  const [students, setStudents] = useState<StudentRecord[]>(defaults.students);
   const [formOpen, setFormOpen] = useState(defaults.formOpen);
 
   function handleClear() {

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from '@mui/material';
 
-export const SubmitButton = ({ handleClick }) => (
+export const SubmitButton = ({ disabled, handleClick }) => (
   <Button
+    disabled={disabled}
     variant="contained"
     color="primary"
     type="submit"
