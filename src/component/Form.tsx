@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stack, Typography, Box } from '@mui/material';
 import {
   IDField,
@@ -38,12 +38,21 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
   const [name, setName] = useState(defaults.name);
   const [grade, setGrade] = useState(defaults.grade);
   const [topic, setTopic] = useState(defaults.topic);
-
   const [day, setDay] = useState(defaults.day);
   const [startTime, setStartTime] = useState(defaults.startTime);
   const [endTime, setEndTime] = useState(defaults.endTime);
-
   const [times, setTimes] = useState<Availability[]>([]);
+  const [disableSubmit, setDisableSubmit] = useState(true);
+
+  useEffect(() => {
+    // Enable submit if all fields are set
+    const letters = /^[0-9a-zA-Z]+$/;
+    if (id.match(letters) && name.match(letters) && times.length > 0) {
+      setDisableSubmit(false);
+    } else {
+      setDisableSubmit(true);
+    }
+  }, [id, name, times]);
 
   const handleDeleteTime = (tableData, index) => {
     const update = tableData.filter((_, i) => i !== index);
@@ -51,7 +60,6 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
   };
 
   const handleAddTime = () => {
-    // must match table headers to display data
     const newEntry: Availability = {
       day,
       startTime,
@@ -59,9 +67,7 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
       delete: handleDeleteTime,
     };
 
-    const update = [...times, newEntry];
-
-    setTimes(update);
+    setTimes((prev) => [...prev, newEntry]);
   };
 
   const handleSubmit = () => {
@@ -83,13 +89,17 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
     setDay(defaults.day);
     setStartTime(defaults.startTime);
     setEndTime(defaults.endTime);
+    setTimes([]);
   };
 
   return (
     <Stack margin={2} spacing={2}>
       <Typography align="center">{header}</Typography>
       <Stack spacing={2} direction="row" justifyContent="center">
-        <SubmitButton handleClick={() => handleSubmit()} />
+        <SubmitButton
+          disabled={disableSubmit}
+          handleClick={() => handleSubmit()}
+        />
         <CloseFormButton handleClick={() => handleParentClose()} />
       </Stack>
       <Stack spacing={2} direction="row" justifyContent="center">
