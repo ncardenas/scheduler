@@ -16,7 +16,6 @@ export const TimeTable = ({ times, handleParentDelete }: Props) => {
       <td>{time.startTime}</td>
       <td>{time.endTime}</td>
       <td>
-        {/* <DeleteTimeEntry handleClick={() => time.delete(times, index)} /> */}
         <DeleteTimeEntry handleClick={() => handleParentDelete(index)} />
       </td>
     </tr>

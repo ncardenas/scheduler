@@ -22,26 +22,29 @@ export interface Availability {
 
 interface Props {
   student: StudentRecord;
+  validDays: string[];
+  validGrades: string[];
+  validTopics: string[];
   handleParentSubmit: (student: StudentRecord) => void;
   handleParentClose: () => void;
 }
 
 export const Form = ({
   student,
+  validDays,
+  validGrades,
+  validTopics,
   handleParentSubmit,
   handleParentClose,
 }: Props) => {
-  const validTopics = ['Speech', 'Another', 'AnotherAnother'];
-  const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  const validGrades = ['First', 'Second', 'Third'];
   const header = 'Student Information';
   const defaults = {
     id: '',
     name: '',
     grade: validGrades[0],
     topic: validTopics[0],
-    day: validDays[0],
     times: [],
+    day: validDays[0],
     startTime: '08:00',
     endTime: '08:30',
     disableSubmit: true,
@@ -74,6 +77,7 @@ export const Form = ({
   };
 
   const handleAddTime = () => {
+    // TODO: Merge times or prevent cross over times
     const newEntry: Availability = {
       day,
       startTime,
