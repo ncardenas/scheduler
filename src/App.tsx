@@ -52,7 +52,17 @@ function App() {
   };
 
   const handleAddStudent = (student: StudentRecord) => {
-    setStudents((prev) => [...prev, student]);
+    let index = -1;
+    students.forEach((saved_student, i) => {
+      if (saved_student.id === student.id) index = i;
+    });
+
+    if (index === -1) {
+      setStudents((prev) => [...prev, student]);
+    } else {
+      students[index] = student;
+      setStudents(students);
+    }
   };
 
   const handleEditStudent = (student) => {

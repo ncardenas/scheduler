@@ -5,10 +5,11 @@ import { Stack } from '@mui/material';
 import { StudentEditButton, StudentDeleteButton } from '../component/Buttons';
 
 interface Props {
-  setParentEdit: (e: any) => void;
-  setParentDelete: (e: any) => void;
+  setParentEdit: (student: StudentRecord) => void;
+  setParentDelete: (index: number) => void;
   students: StudentRecord[];
 }
+
 const StudentTable = ({ setParentEdit, setParentDelete, students }: Props) => {
   // TODO: Make this a subset of the time table headers
   const header_names = ['Unique ID', 'Name', 'Grade', 'Topic', 'Action'];
