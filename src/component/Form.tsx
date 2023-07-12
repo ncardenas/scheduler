@@ -32,6 +32,7 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
     day: validDays[0],
     startTime: '08:00',
     endTime: '08:30',
+    timesError: false,
   };
 
   const [id, setId] = useState(defaults.id);
