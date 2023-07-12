@@ -4,9 +4,10 @@ import { DeleteTimeEntry } from './Buttons';
 import '../table.css';
 interface Props {
   times: Availability[];
+  handleParentDelete: (index: number) => void;
 }
 
-export const TimeTable = ({ times }: Props) => {
+export const TimeTable = ({ times, handleParentDelete }: Props) => {
   const header_names = ['Day', 'Start Time', 'End Time', 'Action'];
   const headers = header_names.map((name) => <th key={name}>{name}</th>);
   const rows = times.map((time, index) => (
@@ -15,7 +16,8 @@ export const TimeTable = ({ times }: Props) => {
       <td>{time.startTime}</td>
       <td>{time.endTime}</td>
       <td>
-        <DeleteTimeEntry handleClick={() => time.delete(times, index)} />
+        {/* <DeleteTimeEntry handleClick={() => time.delete(times, index)} /> */}
+        <DeleteTimeEntry handleClick={() => handleParentDelete(index)} />
       </td>
     </tr>
   ));

@@ -34,7 +34,7 @@ export const Form = ({
   const validTopics = ['Speech', 'Another', 'AnotherAnother'];
   const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const validGrades = ['First', 'Second', 'Third'];
-  const header = 'New Student';
+  const header = 'Student Information';
   const defaults = {
     id: '',
     name: '',
@@ -68,8 +68,11 @@ export const Form = ({
     }
   }, [id, name, times]);
 
-  const handleDeleteTime = (tableData, index) => {
-    const update = tableData.filter((_, i) => i !== index);
+  const handleDeleteTime = (index) => {
+    const update = times.filter((_, i) => i !== index);
+    console.log('delete time');
+    console.log(index);
+    console.log(update);
     setTimes(update);
   };
 
@@ -152,7 +155,7 @@ export const Form = ({
         <AddTimeBlockButton handleClick={() => handleAddTime()} />
       </Stack>
       <Box sx={{ height: '300px', overflowY: 'scroll' }}>
-        <TimeTable times={times} />
+        <TimeTable handleParentDelete={handleDeleteTime} times={times} />
       </Box>
     </Stack>
   );

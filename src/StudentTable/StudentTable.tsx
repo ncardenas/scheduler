@@ -5,12 +5,16 @@ import { Stack } from '@mui/material';
 import { StudentEditButton, StudentDeleteButton } from '../component/Buttons';
 
 interface Props {
-  setParentEdit: (student: StudentRecord) => void;
-  setParentDelete: (index: number) => void;
+  handleParentEdit: (student: StudentRecord) => void;
+  handleParentDelete: (index: number) => void;
   students: StudentRecord[];
 }
 
-const StudentTable = ({ setParentEdit, setParentDelete, students }: Props) => {
+const StudentTable = ({
+  handleParentEdit,
+  handleParentDelete,
+  students,
+}: Props) => {
   // TODO: Make this a subset of the time table headers
   const header_names = ['Unique ID', 'Name', 'Grade', 'Topic', 'Action'];
   const headers = header_names.map((name) => (
@@ -27,8 +31,8 @@ const StudentTable = ({ setParentEdit, setParentDelete, students }: Props) => {
       <td>{student.topic}</td>
       <td>
         <Stack spacing={2} justifyContent="center">
-          <StudentEditButton handleClick={() => setParentEdit(student)} />
-          <StudentDeleteButton handleClick={() => setParentDelete(index)} />
+          <StudentEditButton handleClick={() => handleParentEdit(student)} />
+          <StudentDeleteButton handleClick={() => handleParentDelete(index)} />
         </Stack>
       </td>
     </tr>

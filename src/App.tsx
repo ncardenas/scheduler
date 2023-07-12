@@ -101,8 +101,8 @@ function App() {
       </Stack>
       <Box justifyContent="center" display="flex">
         <StudentTable
-          setParentEdit={handleEditStudent}
-          setParentDelete={handleDeleteStudent}
+          handleParentEdit={handleEditStudent}
+          handleParentDelete={handleDeleteStudent}
           students={students}
         />
       </Box>
