@@ -70,9 +70,6 @@ export const Form = ({
 
   const handleDeleteTime = (index) => {
     const update = times.filter((_, i) => i !== index);
-    console.log('delete time');
-    console.log(index);
-    console.log(update);
     setTimes(update);
   };
 
