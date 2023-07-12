@@ -20,14 +20,27 @@ export interface StudentRecord {
 
 function App() {
   const initStudents = [];
+  const validTopics = ['Speech', 'Another', 'AnotherAnother'];
+  const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const validGrades = ['First', 'Second', 'Third'];
+
+  const newStudent = {
+    id: '',
+    name: '',
+    grade: validGrades[0],
+    topic: validTopics[0],
+    times: [],
+  };
 
   const defaults = {
     students: [],
     formOpen: false,
+    editStudent: newStudent,
   };
 
   const [students, setStudents] = useState<StudentRecord[]>(defaults.students);
   const [formOpen, setFormOpen] = useState(defaults.formOpen);
+  const [editStudent, setEditStudent] = useState(defaults.editStudent);
 
   function handleClear() {
     setStudents(initStudents);
@@ -35,10 +48,21 @@ function App() {
 
   const handleFormClose = () => {
     setFormOpen(false);
+    setEditStudent(newStudent);
   };
 
   const handleAddStudent = (student: StudentRecord) => {
     setStudents((prev) => [...prev, student]);
+  };
+
+  const handleEditStudent = (student) => {
+    setEditStudent(student);
+    setFormOpen(true);
+  };
+
+  const handleDeleteStudent = (index) => {
+    const update = students.filter((_, i) => i !== index);
+    setStudents(update);
   };
 
   return (
@@ -54,6 +78,7 @@ function App() {
           }}
         >
           <Form
+            student={editStudent}
             handleParentSubmit={handleAddStudent}
             handleParentClose={handleFormClose}
           />
@@ -65,7 +90,11 @@ function App() {
         <ClearButton handleClick={handleClear} />
       </Stack>
       <Box justifyContent="center" display="flex">
-        <StudentTable students={students} />
+        <StudentTable
+          setParentEdit={handleEditStudent}
+          setParentDelete={handleDeleteStudent}
+          students={students}
+        />
       </Box>
     </Stack>
   );

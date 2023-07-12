@@ -76,3 +76,25 @@ export const DeleteTimeEntry = ({ handleClick }) => (
     Delete
   </Button>
 );
+
+export const StudentEditButton = ({ handleClick }) => (
+  <Button
+    size="small"
+    variant="contained"
+    color="primary"
+    onClick={handleClick}
+  >
+    Edit
+  </Button>
+);
+
+export const StudentDeleteButton = ({ handleClick }) => (
+  <Button
+    size="small"
+    variant="contained"
+    color="primary"
+    onClick={handleClick}
+  >
+    Delete
+  </Button>
+);

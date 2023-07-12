@@ -11,6 +11,7 @@ import {
 
 import { AddTimeBlockButton, SubmitButton, CloseFormButton } from './Buttons';
 import { TimeTable } from './TimeTable';
+import { StudentRecord } from '../App';
 
 export interface Availability {
   day: string;
@@ -19,7 +20,17 @@ export interface Availability {
   delete: (tableData: Availability[], arg: number) => void;
 }
 
-export const Form = ({ handleParentSubmit, handleParentClose }) => {
+interface Props {
+  student: StudentRecord;
+  handleParentSubmit: (student: StudentRecord) => void;
+  handleParentClose: () => void;
+}
+
+export const Form = ({
+  student,
+  handleParentSubmit,
+  handleParentClose,
+}: Props) => {
   const validTopics = ['Speech', 'Another', 'AnotherAnother'];
   const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const validGrades = ['First', 'Second', 'Third'];
@@ -30,20 +41,22 @@ export const Form = ({ handleParentSubmit, handleParentClose }) => {
     grade: validGrades[0],
     topic: validTopics[0],
     day: validDays[0],
+    times: [],
     startTime: '08:00',
     endTime: '08:30',
-    timesError: false,
+    disableSubmit: true,
   };
 
-  const [id, setId] = useState(defaults.id);
-  const [name, setName] = useState(defaults.name);
-  const [grade, setGrade] = useState(defaults.grade);
-  const [topic, setTopic] = useState(defaults.topic);
+  const [id, setId] = useState(student.id);
+  const [name, setName] = useState(student.name);
+  const [grade, setGrade] = useState(student.grade);
+  const [topic, setTopic] = useState(student.topic);
+  const [times, setTimes] = useState<Availability[]>(student.times);
+
   const [day, setDay] = useState(defaults.day);
   const [startTime, setStartTime] = useState(defaults.startTime);
   const [endTime, setEndTime] = useState(defaults.endTime);
-  const [times, setTimes] = useState<Availability[]>([]);
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(defaults.disableSubmit);
 
   useEffect(() => {
     // Enable submit if all fields are set

@@ -1,13 +1,17 @@
 import React from 'react';
 import { StudentRecord } from '../App';
 import '../table.css';
+import { Stack } from '@mui/material';
+import { StudentEditButton, StudentDeleteButton } from '../component/Buttons';
 
 interface Props {
+  setParentEdit: (e: any) => void;
+  setParentDelete: (e: any) => void;
   students: StudentRecord[];
 }
-const StudentTable = ({ students }: Props) => {
+const StudentTable = ({ setParentEdit, setParentDelete, students }: Props) => {
   // TODO: Make this a subset of the time table headers
-  const header_names = ['Unique ID', 'Name', 'Grade', 'Topic'];
+  const header_names = ['Unique ID', 'Name', 'Grade', 'Topic', 'Action'];
   const headers = header_names.map((name) => (
     <th className="th" key={name}>
       {name}
@@ -20,6 +24,12 @@ const StudentTable = ({ students }: Props) => {
       <td>{student.name}</td>
       <td>{student.grade}</td>
       <td>{student.topic}</td>
+      <td>
+        <Stack spacing={2} justifyContent="center">
+          <StudentEditButton handleClick={() => setParentEdit(student)} />
+          <StudentDeleteButton handleClick={() => setParentDelete(index)} />
+        </Stack>
+      </td>
     </tr>
   ));
 
