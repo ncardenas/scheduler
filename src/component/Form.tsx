@@ -17,7 +17,6 @@ export interface Availability {
   day: string;
   startTime: string;
   endTime: string;
-  delete: (tableData: Availability[], arg: number) => void;
 }
 
 interface Props {
@@ -39,11 +38,6 @@ export const Form = ({
 }: Props) => {
   const header = 'Student Information';
   const defaults = {
-    id: '',
-    name: '',
-    grade: validGrades[0],
-    topic: validTopics[0],
-    times: [],
     day: validDays[0],
     startTime: '08:00',
     endTime: '08:30',
@@ -63,13 +57,26 @@ export const Form = ({
 
   useEffect(() => {
     // Enable submit if all fields are set
+    // TODO: Allow spaces here
     const letters = /^[0-9a-zA-Z]+$/;
-    if (id.match(letters) && name.match(letters) && times.length > 0) {
+    if (name.match(letters) && times.length > 0) {
       setDisableSubmit(false);
     } else {
       setDisableSubmit(true);
     }
   }, [id, name, times]);
+
+  useEffect(() => {
+    // This should be triggered when a new student is given to display on the form
+    setId(student.id);
+    setName(student.name);
+    setGrade(student.grade);
+    setTopic(student.topic);
+    setDay(defaults.day);
+    setStartTime(defaults.startTime);
+    setEndTime(defaults.endTime);
+    setTimes([]);
+  }, [student, defaults.day, defaults.startTime, defaults.endTime]);
 
   const handleDeleteTime = (index) => {
     const update = times.filter((_, i) => i !== index);
@@ -82,10 +89,11 @@ export const Form = ({
       day,
       startTime,
       endTime,
-      delete: handleDeleteTime,
     };
-
     setTimes((prev) => [...prev, newEntry]);
+
+    setStartTime(endTime);
+    setEndTime(endTime);
   };
 
   const handleSubmit = () => {
@@ -96,18 +104,6 @@ export const Form = ({
       topic,
       times,
     });
-    clearForm();
-  };
-
-  const clearForm = () => {
-    setId(defaults.id);
-    setName(defaults.name);
-    setGrade(defaults.grade);
-    setTopic(defaults.topic);
-    setDay(defaults.day);
-    setStartTime(defaults.startTime);
-    setEndTime(defaults.endTime);
-    setTimes([]);
   };
 
   return (

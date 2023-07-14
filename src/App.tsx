@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Box, Stack, Modal } from '@mui/material';
 import { Form } from './component/Form';
 import { Availability } from './component/Form';
@@ -11,7 +11,7 @@ import {
 import StudentTable from './StudentTable/StudentTable';
 
 export interface StudentRecord {
-  id: string;
+  id: number;
   name: string;
   grade: string;
   topic: string;
@@ -24,8 +24,9 @@ function App() {
   const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const validGrades = ['First', 'Second', 'Third'];
 
+  const counter = useRef(1);
   const newStudent = {
-    id: '',
+    id: counter.current,
     name: '',
     grade: validGrades[0],
     topic: validTopics[0],
@@ -47,8 +48,8 @@ function App() {
   }
 
   const handleFormClose = () => {
-    setFormOpen(false);
     setEditStudent(newStudent);
+    setFormOpen(false);
   };
 
   const handleAddStudent = (student: StudentRecord) => {
@@ -57,8 +58,12 @@ function App() {
       if (saved_student.id === student.id) index = i;
     });
 
+    // student index not found
     if (index === -1) {
+      counter.current += 1;
+      newStudent.id = counter.current;
       setStudents((prev) => [...prev, student]);
+      setEditStudent(newStudent);
     } else {
       students[index] = student;
       setStudents(students);
@@ -73,6 +78,10 @@ function App() {
   const handleDeleteStudent = (index) => {
     const update = students.filter((_, i) => i !== index);
     setStudents(update);
+  };
+
+  const handleNewEntry = () => {
+    setFormOpen(true);
   };
 
   return (
@@ -98,7 +107,7 @@ function App() {
         </Box>
       </Modal>
       <Stack spacing={2} direction="row" justifyContent="center">
-        <NewEntryButton handleClick={() => setFormOpen(true)} />
+        <NewEntryButton handleClick={handleNewEntry} />
         <ScheduleStudentsButton handleClick={() => {}} />
         <ClearButton handleClick={handleClear} />
       </Stack>

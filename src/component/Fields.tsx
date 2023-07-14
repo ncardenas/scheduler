@@ -12,8 +12,9 @@ export const IDField = ({ value, handleInputChange }) => {
     <TextField
       id="id-field"
       name="ID"
-      label="ID"
-      type="text"
+      label="Unique ID"
+      type="number"
+      disabled={true}
       value={value}
       onChange={handleInputChange}
     />
