@@ -72,10 +72,11 @@ export const Form = ({
     setName(student.name);
     setGrade(student.grade);
     setTopic(student.topic);
+    setTimes(student.times);
+
     setDay(defaults.day);
     setStartTime(defaults.startTime);
     setEndTime(defaults.endTime);
-    setTimes([]);
   }, [student, defaults.day, defaults.startTime, defaults.endTime]);
 
   const handleDeleteTime = (index) => {
