@@ -1,14 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Box, Stack, Modal } from '@mui/material';
-import { Form } from './component/Form';
-import { Availability } from './component/Form';
-import {
-  ClearButton,
-  ScheduleStudentsButton,
-  NewEntryButton,
-} from './component/Buttons';
-
+import { Availability, Form } from './component/Form';
+import { MeetingDurationForm } from './component/MeetDurationForm';
 import StudentTable from './StudentTable/StudentTable';
+import { ButtonBar } from './component/ButtonBar';
 
 export interface StudentRecord {
   id: number;
@@ -37,11 +32,14 @@ function App() {
     students: [],
     formOpen: false,
     editStudent: newStudent,
+    meetingMinutes: '00',
   };
 
   const [students, setStudents] = useState<StudentRecord[]>(defaults.students);
   const [formOpen, setFormOpen] = useState(defaults.formOpen);
   const [editStudent, setEditStudent] = useState(defaults.editStudent);
+  const [meetingMinutes, setMeetingMinutes] = useState(defaults.meetingMinutes);
+  const [timeSubmit, setTimeSubmit] = useState(false);
 
   function handleClear() {
     setStudents(initStudents);
@@ -85,7 +83,7 @@ function App() {
   };
 
   return (
-    <Stack marginTop={2} spacing={2}>
+    <Stack justifyContent="center" marginTop={2} spacing={2}>
       <Modal open={formOpen} onClose={() => setFormOpen(false)}>
         <Box
           sx={{
@@ -106,11 +104,15 @@ function App() {
           />
         </Box>
       </Modal>
-      <Stack spacing={2} direction="row" justifyContent="center">
-        <NewEntryButton handleClick={handleNewEntry} />
-        <ScheduleStudentsButton handleClick={() => {}} />
-        <ClearButton handleClick={handleClear} />
-      </Stack>
+      <MeetingDurationForm
+        disabled={timeSubmit}
+        handleChange={setMeetingMinutes}
+      />
+      <ButtonBar
+        handleNewEntry={handleNewEntry}
+        handleClear={handleClear}
+        handleSubmit={setTimeSubmit}
+      />
       <Box justifyContent="center" display="flex">
         <StudentTable
           handleParentEdit={handleEditStudent}
