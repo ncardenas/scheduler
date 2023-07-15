@@ -1,5 +1,5 @@
 import React from 'react';
-import { Availability } from './Form';
+import { Availability } from '../types';
 import { DeleteTimeEntry } from './Buttons';
 import '../table.css';
 interface Props {

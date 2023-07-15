@@ -1,5 +1,5 @@
 import React from 'react';
-import { StudentRecord } from '../../App';
+import { StudentRecord } from '../../types';
 import '../../table.css';
 import { Stack } from '@mui/material';
 import { StudentEditButton, StudentDeleteButton } from '../Buttons';

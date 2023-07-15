@@ -1,23 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { Box, Stack, Modal } from '@mui/material';
-import { Availability, Form } from './components/Form';
-import { MeetingDurationForm } from './components/MeetDurationForm';
-import StudentTable from './components/StudentTable/StudentTable';
-import { ButtonBar } from './components/ButtonBar';
-
-export interface StudentRecord {
-    id: number;
-    name: string;
-    grade: string;
-    topic: string;
-    times: Availability[];
-}
+import { validDays, validGrades, validTopics } from './constants';
+import { StudentRecord } from './types';
+import {
+    ButtonBar,
+    Form,
+    StudentTable,
+    MeetingDurationForm,
+} from './components';
 
 function App() {
     const initStudents: StudentRecord[] = [];
-    const validTopics = ['Speech', 'Another', 'AnotherAnother'];
-    const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    const validGrades = ['First', 'Second', 'Third'];
 
     const counter = useRef(1);
     const newStudent: StudentRecord = {

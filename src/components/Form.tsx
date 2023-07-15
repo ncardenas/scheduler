@@ -11,13 +11,7 @@ import {
 
 import { AddTimeBlockButton, SubmitButton, CloseFormButton } from './Buttons';
 import { TimeTable } from './TimeTable';
-import { StudentRecord } from '../App';
-
-export interface Availability {
-    day: string;
-    startTime: string;
-    endTime: string;
-}
+import { StudentRecord, Availability } from '../types';
 
 interface Props {
     student: StudentRecord;
