@@ -1,6 +1,6 @@
 import { StudentTable } from './StudentTable';
 import { ButtonBar } from './ButtonBar';
-import { Form } from './Form';
+import { Form } from './Form/Form';
 import { MeetingDurationForm } from './MeetDurationForm';
 import { TimeTable } from './TimeTable';
 

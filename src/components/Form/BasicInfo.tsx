@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Stack, Typography, Box } from '@mui/material';
-import {
-    IDField,
-    NameField,
-    SelectTopic,
-    SelectDay,
-    SelectTime,
-    SelectGrade,
-} from './Fields';
+import { Stack, Typography } from '@mui/material';
+import { IDField, NameField, SelectTopic, SelectGrade } from '../Fields';
 
-import { AddTimeBlockButton, SubmitButton, CloseFormButton } from './Buttons';
-import { TimeTable } from './TimeTable';
-import { StudentRecord, Availability } from '../types';
+import { SubmitButton, CloseFormButton } from '../Buttons';
+import { StudentRecord, Availability } from '../../types';
+
+const header = 'Student Information';
 
 interface Props {
     student: StudentRecord;
@@ -22,7 +16,7 @@ interface Props {
     handleParentClose: () => void;
 }
 
-export const Form = ({
+export const BasicInfo = ({
     student,
     validDays,
     validGrades,
@@ -30,7 +24,6 @@ export const Form = ({
     handleParentSubmit,
     handleParentClose,
 }: Props) => {
-    const header = 'Student Information';
     const defaults = {
         day: validDays[0],
         startTime: '08:00',
@@ -43,10 +36,6 @@ export const Form = ({
     const [grade, setGrade] = useState(student.grade);
     const [topic, setTopic] = useState(student.topic);
     const [times, setTimes] = useState<Availability[]>(student.times);
-
-    const [day, setDay] = useState(defaults.day);
-    const [startTime, setStartTime] = useState(defaults.startTime);
-    const [endTime, setEndTime] = useState(defaults.endTime);
     const [disableSubmit, setDisableSubmit] = useState(defaults.disableSubmit);
 
     useEffect(() => {
@@ -67,29 +56,7 @@ export const Form = ({
         setGrade(student.grade);
         setTopic(student.topic);
         setTimes(student.times);
-
-        setDay(defaults.day);
-        setStartTime(defaults.startTime);
-        setEndTime(defaults.endTime);
     }, [student, defaults.day, defaults.startTime, defaults.endTime]);
-
-    const handleDeleteTime = (index: number) => {
-        const update = times.filter((_, i) => i !== index);
-        setTimes(update);
-    };
-
-    const handleAddTime = () => {
-        // TODO: Merge times or prevent cross over times
-        const newEntry: Availability = {
-            day,
-            startTime,
-            endTime,
-        };
-        setTimes((prev) => [...prev, newEntry]);
-
-        setStartTime(endTime);
-        setEndTime(endTime);
-    };
 
     const handleSubmit = () => {
         handleParentSubmit({
@@ -112,7 +79,6 @@ export const Form = ({
                 <CloseFormButton handleClick={() => handleParentClose()} />
             </Stack>
             <Stack spacing={2} direction="row" justifyContent="center">
-                {/**TODO: Make Ids unique */}
                 <IDField value={id} handleInputChange={setId} />
                 <NameField value={name} handleInputChange={setName} />
                 <SelectGrade
@@ -126,23 +92,6 @@ export const Form = ({
                     handleInputChange={setTopic}
                 />
             </Stack>
-            {/* Day and Time */}
-            <Stack spacing={2} direction="row" justifyContent="center">
-                <SelectDay
-                    validDays={validDays}
-                    value={day}
-                    handleInputChange={setDay}
-                />
-                <SelectTime value={startTime} handleChange={setStartTime} />
-                <SelectTime value={endTime} handleChange={setEndTime} />
-                <AddTimeBlockButton handleClick={() => handleAddTime()} />
-            </Stack>
-            <Box sx={{ height: '300px', overflowY: 'scroll' }}>
-                <TimeTable
-                    handleParentDelete={handleDeleteTime}
-                    times={times}
-                />
-            </Box>
         </Stack>
     );
 };

@@ -143,19 +143,19 @@ export const SelectDay: React.FC<SelectDayProps> = ({
 };
 
 interface SelectTimeProps {
+    options: React.JSX.Element[];
     value: string;
     handleChange: (arg: string) => void;
 }
 export const SelectTime: React.FC<SelectTimeProps> = ({
+    options,
     value,
     handleChange,
-}) => {
-    return (
-        <input
-            defaultValue={value}
-            type="time"
-            name="startdate"
-            onChange={(e) => handleChange(e.target.value)}
-        />
-    );
-};
+}) => (
+    <FormControl fullWidth>
+        <InputLabel>Meeting Time</InputLabel>
+        <Select value={value} onChange={(e) => handleChange(e.target.value)}>
+            {options}
+        </Select>
+    </FormControl>
+);

@@ -25,7 +25,7 @@ function App() {
         students: [],
         formOpen: false,
         editStudent: newStudent,
-        meetingMinutes: '00',
+        meetingMinutes: 0,
     };
 
     const [students, setStudents] = useState<StudentRecord[]>(
@@ -92,6 +92,7 @@ function App() {
                     }}
                 >
                     <Form
+                        meetingMinutes={meetingMinutes}
                         student={editStudent}
                         validDays={validDays}
                         validGrades={validGrades}
@@ -103,7 +104,7 @@ function App() {
             </Modal>
             <MeetingDurationForm
                 disabled={timeSubmit}
-                handleChange={setMeetingMinutes}
+                handleParentChange={setMeetingMinutes}
             />
             <ButtonBar
                 handleNewEntry={handleNewEntry}
