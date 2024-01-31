@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { BasicInfo } from './BasicInfo';
 import { TimeEntry } from './TimeEntry';
-import { StudentRecord } from '../../types';
+import { Availability, StudentRecord } from '../../types';
 import { useMultistepForm } from './useMultistepForm';
 import { Button } from '@mui/material';
 import React from 'react';
@@ -13,32 +12,23 @@ type FormData = {
     lastName: string;
     grade: string;
     topic: string;
+    times: Availability[];
 };
+
 const INITIAL_DATA: FormData = {
     firstName: '',
     lastName: '',
     grade: validGrades[0],
     topic: validTopics[0],
+    times: [],
 };
 
 interface Props {
     meetingMinutes: number;
-    student: StudentRecord;
-    validDays: string[];
-    validGrades: string[];
-    validTopics: string[];
     handleParentSubmit: (student: StudentRecord) => void;
     handleParentClose: () => void;
 }
-export const Form = ({
-    meetingMinutes,
-    student,
-    validDays,
-    validGrades,
-    validTopics,
-    handleParentSubmit,
-    handleParentClose,
-}: Props) => {
+export const Form = ({ meetingMinutes }: Props) => {
     const [data, setData] = useState(INITIAL_DATA);
 
     function updateFields(fields: Partial<FormData>) {
@@ -56,19 +46,11 @@ export const Form = ({
         back,
         next,
     } = useMultistepForm([
-        // <BasicInfo
-        //     student={student}
-        //     validDays={validDays}
-        //     validGrades={validGrades}
-        //     validTopics={validTopics}
-        //     handleParentSubmit={handleParentSubmit}
-        //     handleParentClose={handleParentClose}
-        // />,
         <StudentInfo {...data} updateFields={updateFields} />,
         <TimeEntry
+            {...data}
+            updateFields={updateFields}
             meetingMinutes={meetingMinutes}
-            student={student}
-            validDays={validDays}
         />,
     ]);
 

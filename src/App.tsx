@@ -93,10 +93,6 @@ function App() {
                 >
                     <Form
                         meetingMinutes={meetingMinutes}
-                        student={editStudent}
-                        validDays={validDays}
-                        validGrades={validGrades}
-                        validTopics={validTopics}
                         handleParentSubmit={handleAddStudent}
                         handleParentClose={handleFormClose}
                     />
