@@ -93,11 +93,22 @@ export const Form = ({ meetingMinutes }: Props) => {
                     }}
                 >
                     {!isFirstStep && (
-                        <Button type="button" onClick={back}>
+                        <Button
+                            type="button"
+                            onClick={back}
+                            size="small"
+                            variant="contained"
+                            color="primary"
+                        >
                             Back
                         </Button>
                     )}
-                    <Button type="submit">
+                    <Button
+                        type="submit"
+                        size="small"
+                        variant="contained"
+                        color="primary"
+                    >
                         {isLastStep ? 'Submit' : 'Next'}
                     </Button>
                 </div>

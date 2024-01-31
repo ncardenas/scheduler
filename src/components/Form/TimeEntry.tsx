@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Button } from '@mui/material';
 import { Availability } from '../../types';
 import { TimeTable } from '../TimeTable';
 import { AddTimeBlockButton } from '../Buttons';
+import { FormWrapper } from './FormWrapper';
 
 import { SelectDay, SelectTime } from '../Fields';
 import { validDays } from '../../constants';
@@ -37,7 +38,7 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
     };
 
     const handleAddTime = () => {
-        // TODO: Merge times or prevent cross over times
+        // TODO: eliminate selected time from options
         const newEntry: Availability = {
             day,
             startTime,
@@ -50,28 +51,38 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
     };
 
     return (
-        <Stack>
-            <Stack spacing={2} direction="row" justifyContent="center">
-                <SelectDay
-                    validDays={validDays}
-                    value={day}
-                    handleInputChange={setDay}
-                />
-                <SelectTime
-                    options={meetingOptions.map(
-                        (option: Option) => option.menuItem
-                    )}
-                    value={timeSelected}
-                    handleChange={setTimeSelected}
-                />
-                <AddTimeBlockButton handleClick={() => handleAddTime()} />
-            </Stack>
-            <Box sx={{ height: '300px', overflowY: 'scroll' }}>
-                <TimeTable
-                    handleParentDelete={handleDeleteTime}
-                    times={times}
-                />
-            </Box>
-        </Stack>
+        <FormWrapper title="Meeting Times">
+            <label>Day</label>
+            <select value={day} onChange={(e) => setDay(e.target.value)}>
+                {validDays.map((day) => (
+                    <option value={day}>{day}</option>
+                ))}
+            </select>
+            <label>Meeting Time</label>
+            <select
+                value={timeSelected}
+                onChange={(e) => setTimeSelected(e.target.value)}
+            >
+                {meetingOptions.map((option: Option) => option.menuItem)}
+            </select>
+
+            <Button
+                type="button"
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={() => handleAddTime()}
+            >
+                Add
+            </Button>
+            <div>
+                <Box sx={{ height: '300px', overflowY: 'scroll' }}>
+                    <TimeTable
+                        handleParentDelete={handleDeleteTime}
+                        times={times}
+                    />
+                </Box>
+            </div>
+        </FormWrapper>
     );
 };

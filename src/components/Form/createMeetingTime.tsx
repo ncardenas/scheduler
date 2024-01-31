@@ -1,5 +1,3 @@
-import { MenuItem } from '@mui/material';
-
 export interface Option {
     menuItem: React.JSX.Element;
     strStart: string;
@@ -26,9 +24,9 @@ function createOption(
     const totalEnd = endHours * 60 + endMins;
 
     const menuItem = (
-        <MenuItem key={menuText} value={menuText}>
+        <option key={menuText} value={menuText}>
             {menuText}
-        </MenuItem>
+        </option>
     );
     const option: Option = {
         menuItem: menuItem,

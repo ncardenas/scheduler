@@ -41,7 +41,9 @@ export function StudentInfo({
                 onChange={(e) => updateFields({ grade: e.target.value })}
             >
                 {validGrades.map((grade) => (
-                    <option value={grade}>{grade}</option>
+                    <option key={grade} value={grade}>
+                        {grade}
+                    </option>
                 ))}
             </select>
             <label>Topic</label>
@@ -50,7 +52,9 @@ export function StudentInfo({
                 onChange={(e) => updateFields({ topic: e.target.value })}
             >
                 {validTopics.map((topic) => (
-                    <option value={topic}>{topic}</option>
+                    <option key={topic} value={topic}>
+                        {topic}
+                    </option>
                 ))}
             </select>
         </FormWrapper>

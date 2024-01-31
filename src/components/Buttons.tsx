@@ -61,9 +61,9 @@ export const NewStudentButton: React.FC<ButtonProps> = ({ handleClick }) => (
 
 export const AddTimeBlockButton: React.FC<ButtonProps> = ({ handleClick }) => (
     <Button
+        type="button"
         variant="contained"
         color="primary"
-        type="submit"
         onClick={handleClick}
     >
         Add
