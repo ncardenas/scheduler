@@ -40,7 +40,6 @@ export const Form = ({
     function onSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
         if (!isLastStep) return next();
-        console.log(data);
         handleParentSubmit(data);
     }
 

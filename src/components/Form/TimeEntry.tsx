@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 import { Availability } from '../../types';
 import { TimeTable } from '../TimeTable';
 import { validDays } from '../../constants';
-import './TimeEntry.css';
+import './TimeEntry.scss';
 
 import {
     createMeetingOptions,

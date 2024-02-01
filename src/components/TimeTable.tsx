@@ -2,7 +2,7 @@ import React from 'react';
 import { Availability } from '../types';
 import { DeleteTimeEntry } from './Buttons';
 import { timeToString } from './Form/createMeetingTime';
-import '../table.css';
+import '../table.scss';
 interface Props {
     times: Availability[];
     handleParentDelete: (index: number) => void;

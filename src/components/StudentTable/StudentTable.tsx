@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormData } from '../../types';
-import '../../table.css';
+import '../../table.scss';
 import { Stack } from '@mui/material';
 import { StudentEditButton, StudentDeleteButton } from '../Buttons';
 
