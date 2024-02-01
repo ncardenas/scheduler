@@ -1,7 +1,7 @@
 export interface Availability {
     day: string;
-    startTime: string;
-    endTime: string;
+    startTime: number;
+    endTime: number;
 }
 
 export interface StudentRecord {

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Box, Stack, Modal } from '@mui/material';
-import { validDays, validGrades, validTopics } from './constants';
+import { validGrades, validTopics } from './constants';
 import { StudentRecord } from './types';
 import {
     ButtonBar,

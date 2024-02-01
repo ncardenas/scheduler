@@ -1,6 +1,7 @@
 import React from 'react';
 import { Availability } from '../types';
 import { DeleteTimeEntry } from './Buttons';
+import { timeToString } from './Form/createMeetingTime';
 import '../table.css';
 interface Props {
     times: Availability[];
@@ -13,8 +14,8 @@ export const TimeTable: React.FC<Props> = ({ times, handleParentDelete }) => {
     const rows = times.map((time, index) => (
         <tr key={index}>
             <td>{time.day}</td>
-            <td>{time.startTime}</td>
-            <td>{time.endTime}</td>
+            <td>{timeToString(time.startTime)}</td>
+            <td>{timeToString(time.endTime)}</td>
             <td>
                 <DeleteTimeEntry
                     handleClick={() => handleParentDelete(index)}

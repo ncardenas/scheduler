@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Stack, Box, Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { Availability } from '../../types';
 import { TimeTable } from '../TimeTable';
-import { AddTimeBlockButton } from '../Buttons';
-import { FormWrapper } from './FormWrapper';
-
-import { SelectDay, SelectTime } from '../Fields';
 import { validDays } from '../../constants';
-import { createMeetingOptions, Option } from './createMeetingTime';
+import './TimeEntry.css';
+
+import {
+    createMeetingOptions,
+    Option,
+    optionToString,
+} from './createMeetingTime';
 
 const defaults = {
     day: validDays[0],
@@ -27,18 +29,32 @@ type Props = TimeData & {
 
 export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
     const [day, setDay] = useState(defaults.day);
-    const [timeSelected, setTimeSelected] = useState('');
-    const [startTime, setStartTime] = useState(defaults.startTime);
-    const [endTime, setEndTime] = useState(defaults.endTime);
+    const [timeSelected, setTimeSelected] = useState(0);
+    const [meetingTimes, setMeetingTimes] = useState(
+        createMeetingOptions(meetingMinutes)
+    );
 
-    const meetingOptions = createMeetingOptions(meetingMinutes);
     const handleDeleteTime = (index: number) => {
         const update = times.filter((_, i) => i !== index);
         updateFields({ times: update });
+
+        const newEntry: Option = {
+            start: times[index].startTime,
+            end: times[index].endTime,
+        };
+
+        // Add to available meeting times
+        setMeetingTimes((prev) => {
+            const update = [...prev, newEntry].sort(
+                (lhs, rhs) => lhs.start - rhs.start
+            );
+            return update;
+        });
     };
 
     const handleAddTime = () => {
-        // TODO: eliminate selected time from options
+        const startTime = meetingTimes[timeSelected].start;
+        const endTime = meetingTimes[timeSelected].end;
         const newEntry: Availability = {
             day,
             startTime,
@@ -46,35 +62,47 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
         };
         updateFields({ times: [...times, newEntry] });
 
-        setStartTime(endTime);
-        setEndTime(endTime);
+        // Remove from available meeting times
+        setMeetingTimes((prev) => prev.filter((_, i) => i !== timeSelected));
     };
 
     return (
-        <FormWrapper title="Meeting Times">
-            <label>Day</label>
+        <>
+            <h2 className="header">Meeting Times</h2>
+            <label className="label">Day</label>
             <select value={day} onChange={(e) => setDay(e.target.value)}>
                 {validDays.map((day) => (
-                    <option value={day}>{day}</option>
+                    <option key={day} value={day}>
+                        {day}
+                    </option>
                 ))}
             </select>
-            <label>Meeting Time</label>
+
+            <label className="label">Meeting Time</label>
             <select
                 value={timeSelected}
-                onChange={(e) => setTimeSelected(e.target.value)}
+                onChange={(e) => setTimeSelected(+e.target.value)}
             >
-                {meetingOptions.map((option: Option) => option.menuItem)}
+                {meetingTimes.map((option: Option, i: number) => (
+                    <option key={i} value={i}>
+                        {optionToString(option)}
+                    </option>
+                ))}
             </select>
 
-            <Button
-                type="button"
-                size="small"
-                variant="contained"
-                color="primary"
-                onClick={() => handleAddTime()}
-            >
-                Add
-            </Button>
+            <div>
+                <Button
+                    type="button"
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                    style={{ maxWidth: '30px' }}
+                    onClick={() => handleAddTime()}
+                >
+                    Add
+                </Button>
+            </div>
+
             <div>
                 <Box sx={{ height: '300px', overflowY: 'scroll' }}>
                     <TimeTable
@@ -83,6 +111,6 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
                     />
                 </Box>
             </div>
-        </FormWrapper>
+        </>
     );
 };

@@ -1,0 +1,38 @@
+.header {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 2rem;
+}
+
+.item-a {
+    grid-area: day;
+}
+
+.item-b {
+    grid-area: time;
+}
+
+.item-c {
+    grid-area: add-button;
+}
+
+.item-d {
+    grid-area: meeting-table;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    /* display: grid;
+    grid-template-columns: 100px 100px 100px 100px;
+    grid-template-rows: auto;
+    grid-template-areas:
+        'day day add-button add-button'
+        'time time add-button add-button'
+        'meeting-table meeting-table meeting-table meeting-table'; */
+    font-family: 'Areal';
+}
+
+.label {
+    width: 25%;
+}
