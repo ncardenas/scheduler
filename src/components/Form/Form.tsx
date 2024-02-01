@@ -1,46 +1,25 @@
-import { useState } from 'react';
 import { TimeEntry } from './TimeEntry';
-import { Availability, StudentRecord } from '../../types';
+import { FormData } from '../../types';
 import { useMultistepForm } from './useMultistepForm';
 import { Button } from '@mui/material';
 import React from 'react';
 import { StudentInfo } from './StudentInfo';
-import { validGrades, validTopics } from '../../constants';
-
-type FormData = {
-    firstName: string;
-    lastName: string;
-    grade: string;
-    topic: string;
-    times: Availability[];
-};
-
-const INITIAL_DATA: FormData = {
-    firstName: '',
-    lastName: '',
-    grade: validGrades[0],
-    topic: validTopics[0],
-    times: [],
-};
 
 interface Props {
+    data: FormData;
     meetingMinutes: number;
-    handleParentSubmit: (student: StudentRecord) => void;
+    updateFields: (fields: Partial<FormData>) => void;
+    handleParentSubmit: (student: FormData) => void;
     handleParentClose: () => void;
 }
+
 export const Form = ({
+    data,
     meetingMinutes,
+    updateFields,
     handleParentSubmit,
     handleParentClose,
 }: Props) => {
-    const [data, setData] = useState(INITIAL_DATA);
-
-    function updateFields(fields: Partial<FormData>) {
-        setData((prev) => {
-            return { ...prev, ...fields };
-        });
-    }
-
     const {
         steps,
         currentStepIndex,
@@ -61,7 +40,8 @@ export const Form = ({
     function onSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
         if (!isLastStep) return next();
-        // handleParentSubmit();
+        console.log(data);
+        handleParentSubmit(data);
     }
 
     return (

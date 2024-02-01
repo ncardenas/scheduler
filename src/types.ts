@@ -4,11 +4,11 @@ export interface Availability {
     endTime: number;
 }
 
-export interface StudentRecord {
+export type FormData = {
     id: number;
     firstName: string;
     lastName: string;
     grade: string;
     topic: string;
     times: Availability[];
-}
+};

@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Box, Stack, Modal } from '@mui/material';
 import { validGrades, validTopics } from './constants';
-import { StudentRecord } from './types';
+import { FormData } from './types';
+
 import {
     ButtonBar,
     Form,
@@ -10,10 +11,10 @@ import {
 } from './components';
 
 function App() {
-    const initStudents: StudentRecord[] = [];
+    const initStudents: FormData[] = [];
 
     const counter = useRef(1);
-    const newStudent: StudentRecord = {
+    const newStudent: FormData = {
         id: counter.current,
         firstName: '',
         lastName: '',
@@ -29,9 +30,7 @@ function App() {
         meetingMinutes: 0,
     };
 
-    const [students, setStudents] = useState<StudentRecord[]>(
-        defaults.students
-    );
+    const [students, setStudents] = useState<FormData[]>(defaults.students);
     const [formOpen, setFormOpen] = useState(defaults.formOpen);
     const [editStudent, setEditStudent] = useState(defaults.editStudent);
     const [meetingMinutes, setMeetingMinutes] = useState(
@@ -48,7 +47,7 @@ function App() {
         setFormOpen(false);
     };
 
-    const handleAddStudent = (student: StudentRecord) => {
+    const handleAddStudent = (student: FormData) => {
         let index = -1;
         students.forEach((saved_student, i) => {
             if (saved_student.id === student.id) index = i;
@@ -66,7 +65,7 @@ function App() {
         }
     };
 
-    const handleEditStudent = (student: StudentRecord) => {
+    const handleEditStudent = (student: FormData) => {
         setEditStudent(student);
         setFormOpen(true);
     };
@@ -79,6 +78,12 @@ function App() {
     const handleNewEntry = () => {
         setFormOpen(true);
     };
+
+    function updateFields(fields: Partial<FormData>) {
+        setEditStudent((prev: FormData) => {
+            return { ...prev, ...fields };
+        });
+    }
 
     return (
         <Stack justifyContent="center" marginTop={2} spacing={2}>
@@ -93,7 +98,9 @@ function App() {
                     }}
                 >
                     <Form
+                        data={editStudent}
                         meetingMinutes={meetingMinutes}
+                        updateFields={updateFields}
                         handleParentSubmit={handleAddStudent}
                         handleParentClose={handleFormClose}
                     />

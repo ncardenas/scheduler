@@ -1,13 +1,13 @@
 import React from 'react';
-import { StudentRecord } from '../../types';
+import { FormData } from '../../types';
 import '../../table.css';
 import { Stack } from '@mui/material';
 import { StudentEditButton, StudentDeleteButton } from '../Buttons';
 
 interface Props {
-    handleParentEdit: (student: StudentRecord) => void;
+    handleParentEdit: (student: FormData) => void;
     handleParentDelete: (index: number) => void;
-    students: StudentRecord[];
+    students: FormData[];
 }
 
 const StudentTable = ({
