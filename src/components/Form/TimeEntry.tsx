@@ -69,10 +69,11 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
     return (
         <>
             <h2 className="header">Student Availability</h2>
-            <div className="popup">
-                <div className="line-item item-a">
+            <div className="container">
+                <div className="item-a">
                     <label>Day</label>
                     <select
+                        className="select"
                         value={day}
                         onChange={(e) => setDay(e.target.value)}
                     >
@@ -82,11 +83,9 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
                             </option>
                         ))}
                     </select>
-                </div>
-
-                <div className="line-item item-b">
                     <label>Times</label>
                     <select
+                        className="select"
                         value={timeSelected}
                         onChange={(e) => setTimeSelected(+e.target.value)}
                     >
@@ -97,7 +96,6 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
                         ))}
                     </select>
                 </div>
-
                 <div className="item-c">
                     <Button
                         type="button"
@@ -112,7 +110,13 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
                 </div>
 
                 <div className="item-d">
-                    <Box sx={{ height: '300px', overflowY: 'scroll' }}>
+                    <Box
+                        sx={{
+                            height: '300px',
+                            overflowY: 'scroll',
+                            width: '100%',
+                        }}
+                    >
                         <TimeTable
                             handleParentDelete={handleDeleteTime}
                             times={times}

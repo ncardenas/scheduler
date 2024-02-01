@@ -25,7 +25,7 @@ export const TimeTable: React.FC<Props> = ({ times, handleParentDelete }) => {
     ));
 
     return (
-        <table>
+        <table style={{ tableLayout: 'fixed' }}>
             <thead>
                 <tr>{headers}</tr>
             </thead>
