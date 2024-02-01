@@ -28,7 +28,11 @@ interface Props {
     handleParentSubmit: (student: StudentRecord) => void;
     handleParentClose: () => void;
 }
-export const Form = ({ meetingMinutes, handleParentClose }: Props) => {
+export const Form = ({
+    meetingMinutes,
+    handleParentSubmit,
+    handleParentClose,
+}: Props) => {
     const [data, setData] = useState(INITIAL_DATA);
 
     function updateFields(fields: Partial<FormData>) {
@@ -57,7 +61,7 @@ export const Form = ({ meetingMinutes, handleParentClose }: Props) => {
     function onSubmit(e: React.SyntheticEvent) {
         e.preventDefault();
         if (!isLastStep) return next();
-        alert('Successful!');
+        // handleParentSubmit();
     }
 
     return (

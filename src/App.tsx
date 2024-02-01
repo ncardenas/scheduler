@@ -15,7 +15,8 @@ function App() {
     const counter = useRef(1);
     const newStudent: StudentRecord = {
         id: counter.current,
-        name: '',
+        firstName: '',
+        lastName: '',
         grade: validGrades[0],
         topic: validTopics[0],
         times: [],

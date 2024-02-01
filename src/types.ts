@@ -6,7 +6,8 @@ export interface Availability {
 
 export interface StudentRecord {
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
     grade: string;
     topic: string;
     times: Availability[];
