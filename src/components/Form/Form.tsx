@@ -28,7 +28,7 @@ interface Props {
     handleParentSubmit: (student: StudentRecord) => void;
     handleParentClose: () => void;
 }
-export const Form = ({ meetingMinutes }: Props) => {
+export const Form = ({ meetingMinutes, handleParentClose }: Props) => {
     const [data, setData] = useState(INITIAL_DATA);
 
     function updateFields(fields: Partial<FormData>) {
@@ -92,13 +92,22 @@ export const Form = ({ meetingMinutes }: Props) => {
                         justifyContent: 'flex-end',
                     }}
                 >
+                    <Button
+                        type="button"
+                        size="small"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleParentClose}
+                    >
+                        Close
+                    </Button>
                     {!isFirstStep && (
                         <Button
                             type="button"
-                            onClick={back}
                             size="small"
                             variant="contained"
                             color="primary"
+                            onClick={back}
                         >
                             Back
                         </Button>

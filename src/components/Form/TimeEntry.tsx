@@ -68,48 +68,57 @@ export const TimeEntry = ({ times, meetingMinutes, updateFields }: Props) => {
 
     return (
         <>
-            <h2 className="header">Meeting Times</h2>
-            <label className="label">Day</label>
-            <select value={day} onChange={(e) => setDay(e.target.value)}>
-                {validDays.map((day) => (
-                    <option key={day} value={day}>
-                        {day}
-                    </option>
-                ))}
-            </select>
+            <h2 className="header">Student Availability</h2>
+            <div className="popup">
+                <div className="line-item item-a">
+                    <label>Day</label>
+                    <select
+                        value={day}
+                        onChange={(e) => setDay(e.target.value)}
+                    >
+                        {validDays.map((day) => (
+                            <option key={day} value={day}>
+                                {day}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-            <label className="label">Meeting Time</label>
-            <select
-                value={timeSelected}
-                onChange={(e) => setTimeSelected(+e.target.value)}
-            >
-                {meetingTimes.map((option: Option, i: number) => (
-                    <option key={i} value={i}>
-                        {optionToString(option)}
-                    </option>
-                ))}
-            </select>
+                <div className="line-item item-b">
+                    <label>Times</label>
+                    <select
+                        value={timeSelected}
+                        onChange={(e) => setTimeSelected(+e.target.value)}
+                    >
+                        {meetingTimes.map((option: Option, i: number) => (
+                            <option key={i} value={i}>
+                                {optionToString(option)}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-            <div>
-                <Button
-                    type="button"
-                    size="small"
-                    variant="contained"
-                    color="primary"
-                    style={{ maxWidth: '30px' }}
-                    onClick={() => handleAddTime()}
-                >
-                    Add
-                </Button>
-            </div>
+                <div className="item-c">
+                    <Button
+                        type="button"
+                        size="small"
+                        variant="contained"
+                        color="primary"
+                        style={{ maxWidth: '30px' }}
+                        onClick={() => handleAddTime()}
+                    >
+                        Add
+                    </Button>
+                </div>
 
-            <div>
-                <Box sx={{ height: '300px', overflowY: 'scroll' }}>
-                    <TimeTable
-                        handleParentDelete={handleDeleteTime}
-                        times={times}
-                    />
-                </Box>
+                <div className="item-d">
+                    <Box sx={{ height: '300px', overflowY: 'scroll' }}>
+                        <TimeTable
+                            handleParentDelete={handleDeleteTime}
+                            times={times}
+                        />
+                    </Box>
+                </div>
             </div>
         </>
     );
